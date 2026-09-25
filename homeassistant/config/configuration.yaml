@@ -1,0 +1,195 @@
+homeassistant:
+  packages: !include_dir_named packages
+  name: MetehanTech
+  time_zone: Europe/Istanbul
+  unit_system: metric
+
+# Explicit core components; no unused Bluetooth/USB privileges.
+frontend:
+  themes: !include_dir_merge_named themes
+  # Kiosk Mode (HACS, NemesisRE/kiosk-mode). Loading the module is inert on its
+  # own; hiding only happens where a dashboard declares a `kiosk_mode:` block.
+  extra_module_url:
+    - /hacsfiles/kiosk-mode/kiosk-mode.js?v=14.2.1
+config:
+history:
+logbook:
+my:
+sun:
+zeroconf:
+ssdp:
+api:
+mobile_app:
+energy:
+# HTTP listen addresses are stored in .storage/http (HA 2026.9).
+recorder:
+  purge_keep_days: 10
+  auto_purge: true
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+media_source:
+
+stream:
+
+# MetehanTech Systems monitoring (Pi5 + PcOld).
+# Reuses the existing MetehanTech Status API (metehantech-status.service,
+# 127.0.0.1:5200) and Nextcloud's built-in status.php — both loopback-only on
+# this host, no new daemons/containers/ports.
+rest:
+  - resource: http://127.0.0.1:5200/api/status
+    scan_interval: 60
+    timeout: 5
+    sensor:
+      - name: "Pi5 CPU"
+        unique_id: metehantech_pi5_cpu
+        unit_of_measurement: "%"
+        icon: mdi:cpu-64-bit
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ (d.metrics.cpu | default('0%', true)) | replace('%','') | trim }}
+      - name: "Pi5 Temperature"
+        unique_id: metehantech_pi5_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ (d.metrics.temperature | default('0 °C', true)) | replace('°C','') | trim }}
+      - name: "Pi5 RAM"
+        unique_id: metehantech_pi5_ram
+        unit_of_measurement: "%"
+        icon: mdi:memory
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ (d.metrics.ram | default('0%', true)) | replace('%','') | trim }}
+      - name: "Pi5 Disk"
+        unique_id: metehantech_pi5_disk
+        unit_of_measurement: "%"
+        icon: mdi:harddisk
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ (d.metrics.disk | default('0%', true)) | replace('%','') | trim }}
+      - name: "Pi5 Uptime"
+        unique_id: metehantech_pi5_uptime
+        icon: mdi:clock-outline
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.uptime | default('unknown', true) }}
+      - name: "PcOld CPU"
+        unique_id: metehantech_pcold_cpu
+        unit_of_measurement: "%"
+        icon: mdi:cpu-64-bit
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ (d.metrics.cpu | default(d.metrics.load, true) | default('0', true)) | replace('%','') | trim }}
+      - name: "PcOld Temperature"
+        unique_id: metehantech_pcold_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ (d.metrics.temperature | default('0 °C', true)) | replace('°C','') | trim }}
+      - name: "PcOld RAM"
+        unique_id: metehantech_pcold_ram
+        unit_of_measurement: "%"
+        icon: mdi:memory
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ (d.metrics.ram | default('0%', true)) | replace('%','') | trim }}
+      - name: "PcOld Disk"
+        unique_id: metehantech_pcold_disk
+        unit_of_measurement: "%"
+        icon: mdi:harddisk
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ (d.metrics.disk | default('0%', true)) | replace('%','') | trim }}
+      - name: "PcOld Uptime"
+        unique_id: metehantech_pcold_uptime
+        icon: mdi:clock-outline
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ d.uptime | default('unavailable', true) }}
+    binary_sensor:
+      - name: "Pi5 Online"
+        unique_id: metehantech_pi5_online
+        device_class: connectivity
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.online | lower }}
+      - name: "Pi5 Docker"
+        unique_id: metehantech_pi5_docker
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.checks.Docker | lower }}
+      - name: "Pi5 Cloudflared"
+        unique_id: metehantech_pi5_cloudflared
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.checks.Cloudflared | lower }}
+      - name: "Pi5 Tailscale"
+        unique_id: metehantech_pi5_tailscale
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.checks.Tailscale | lower }}
+      - name: "Pi5 RustDesk"
+        unique_id: metehantech_pi5_rustdesk
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.checks.RustDesk | lower }}
+      - name: "Pi5 Throttled"
+        unique_id: metehantech_pi5_throttled
+        device_class: problem
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pi5') | first %}
+          {{ d.checks.Throttled | lower }}
+      - name: "PcOld Online"
+        unique_id: metehantech_pcold_online
+        device_class: connectivity
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ d.online | lower }}
+      - name: "PcOld Docker"
+        unique_id: metehantech_pcold_docker
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ d.checks.Docker | lower }}
+      - name: "PcOld SMART"
+        unique_id: metehantech_pcold_smart
+        device_class: problem
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ (d.checks.SMART == false) | lower }}
+      - name: "PcOld Portainer"
+        unique_id: metehantech_pcold_portainer
+        value_template: >-
+          {% set d = value_json.devices | selectattr('id','eq','pcold') | first %}
+          {{ d.checks.Portainer | lower }}
+  - resource: http://127.0.0.1:5300/status.php
+    scan_interval: 60
+    timeout: 5
+    sensor:
+      - name: "Pi5 Nextcloud"
+        unique_id: metehantech_pi5_nextcloud
+        icon: mdi:cloud-outline
+        value_template: >-
+          {% if value_json.maintenance %}MAINTENANCE
+          {%- elif value_json.installed %}OK
+          {%- else %}DOWN{% endif %}
+
+# Additive dashboard entry; does not touch the existing storage-mode dashboards.
+lovelace:
+  dashboards:
+    metehantech-systems:
+      mode: yaml
+      title: MetehanTech Systems
+      icon: mdi:server
+      show_in_sidebar: true
+      filename: dashboards/metehantech-systems.yaml
+
+    metehantech-home:
+      mode: yaml
+      title: MetehanTech Home
+      icon: mdi:home-lightning-bolt
+      show_in_sidebar: true
+      filename: dashboards/metehantech-home.yaml

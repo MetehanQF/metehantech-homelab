@@ -1,0 +1,1874 @@
+input_select:
+  metehantech_mode:
+    name: Ev Modu
+    options: &id001
+    - HOME
+    - AWAY
+    - NIGHT
+    - SLEEP
+    - WORK
+    - MOVIE
+    - GAMING
+    - GUEST
+    - CLEANING
+    icon: mdi:home-switch
+  metehantech_previous_mode:
+    name: Önceki Mod
+    options: *id001
+input_boolean:
+  metehantech_pause:
+    name: Kullanıcı otomasyonlarını duraklat
+    icon: mdi:pause-circle
+  metehantech_presence_enabled:
+    name: Otomatik presence (önce güvenilirliği doğrula)
+    icon: mdi:toggle-switch
+  metehantech_break_enabled:
+    name: Çalışma molası hatırlatması
+    icon: mdi:toggle-switch
+  metehantech_manual_odam_lamba:
+    name: odam_lamba manuel kilit
+  metehantech_owned_odam_lamba:
+    name: odam_lamba otomatik akşam ışığı
+  metehantech_manual_oda_2:
+    name: oda_2 manuel kilit
+  metehantech_owned_oda_2:
+    name: oda_2 otomatik akşam ışığı
+  metehantech_manual_oda_3:
+    name: oda_3 manuel kilit
+  metehantech_owned_oda_3:
+    name: oda_3 otomatik akşam ışığı
+  metehantech_manual_oda_4:
+    name: oda_4 manuel kilit
+  metehantech_owned_oda_4:
+    name: oda_4 otomatik akşam ışığı
+  metehantech_manual_masa_ambiyans:
+    name: masa_ambiyans manuel kilit
+  metehantech_owned_masa_ambiyans:
+    name: masa_ambiyans otomatik akşam ışığı
+  metehantech_camera_away:
+    name: Kamera · ev dışı güvenlik
+    icon: mdi:shield-home
+input_datetime:
+  metehantech_auto_odam_lamba:
+    name: odam_lamba son otomatik komut
+    has_date: true
+    has_time: true
+  metehantech_auto_oda_2:
+    name: oda_2 son otomatik komut
+    has_date: true
+    has_time: true
+  metehantech_auto_oda_3:
+    name: oda_3 son otomatik komut
+    has_date: true
+    has_time: true
+  metehantech_auto_oda_4:
+    name: oda_4 son otomatik komut
+    has_date: true
+    has_time: true
+  metehantech_auto_masa_ambiyans:
+    name: masa_ambiyans son otomatik komut
+    has_date: true
+    has_time: true
+  metehantech_last_person:
+    name: Son güvenlik bildirimi
+    has_date: true
+    has_time: true
+input_text:
+  metehantech_last_person_id:
+    name: Son Frigate olay kimliği
+    max: 100
+  mt_notice_mt_pi5_temperature_alert:
+    name: Bildirim durumu sensor.mt_pi5_temperature_alert
+    max: 16
+  mt_notice_mt_pi5_disk_alert:
+    name: Bildirim durumu sensor.mt_pi5_disk_alert
+    max: 16
+  mt_notice_mt_pi5_ram_alert:
+    name: Bildirim durumu sensor.mt_pi5_ram_alert
+    max: 16
+  mt_notice_mt_pi5_cpu_alert:
+    name: Bildirim durumu sensor.mt_pi5_cpu_alert
+    max: 16
+  mt_notice_mt_pi5_online_alert:
+    name: Bildirim durumu sensor.mt_pi5_online_alert
+    max: 16
+  mt_notice_mt_pi5_stale_alert:
+    name: Bildirim durumu sensor.mt_pi5_stale_alert
+    max: 16
+  mt_notice_mt_pcold_temperature_alert:
+    name: Bildirim durumu sensor.mt_pcold_temperature_alert
+    max: 16
+  mt_notice_mt_pcold_disk_alert:
+    name: Bildirim durumu sensor.mt_pcold_disk_alert
+    max: 16
+  mt_notice_mt_pcold_ram_alert:
+    name: Bildirim durumu sensor.mt_pcold_ram_alert
+    max: 16
+  mt_notice_mt_pcold_cpu_alert:
+    name: Bildirim durumu sensor.mt_pcold_cpu_alert
+    max: 16
+  mt_notice_mt_pcold_online_alert:
+    name: Bildirim durumu sensor.mt_pcold_online_alert
+    max: 16
+  mt_notice_mt_pcold_stale_alert:
+    name: Bildirim durumu sensor.mt_pcold_stale_alert
+    max: 16
+  mt_notice_mt_throttled_alert:
+    name: Bildirim durumu sensor.mt_throttled_alert
+    max: 16
+  mt_notice_mt_smart_alert:
+    name: Bildirim durumu sensor.mt_smart_alert
+    max: 16
+  mt_notice_mt_pi5_docker_alert:
+    name: Bildirim durumu sensor.mt_pi5_docker_alert
+    max: 16
+  mt_notice_mt_pcold_docker_alert:
+    name: Bildirim durumu sensor.mt_pcold_docker_alert
+    max: 16
+  mt_notice_mt_cloudflare_alert:
+    name: Bildirim durumu sensor.mt_cloudflare_alert
+    max: 16
+  mt_notice_mt_tailscale_alert:
+    name: Bildirim durumu sensor.mt_tailscale_alert
+    max: 16
+  mt_notice_mt_portainer_alert:
+    name: Bildirim durumu sensor.mt_portainer_alert
+    max: 16
+  mt_notice_mt_nextcloud_alert:
+    name: Bildirim durumu sensor.mt_nextcloud_alert
+    max: 16
+  mt_notice_mt_bridge_alert:
+    name: Bildirim durumu sensor.mt_bridge_alert
+    max: 16
+  mt_notice_mt_frigate_alert:
+    name: Bildirim durumu sensor.mt_frigate_alert
+    max: 16
+  mt_notice_mt_camera_alert:
+    name: Bildirim durumu sensor.mt_camera_alert
+    max: 16
+  mt_notice_mt_detection_alert:
+    name: Bildirim durumu sensor.mt_detection_alert
+    max: 16
+  mt_notice_mt_recording_alert:
+    name: Bildirim durumu sensor.mt_recording_alert
+    max: 16
+  mt_notice_mt_ffmpeg_alert:
+    name: Bildirim durumu sensor.mt_ffmpeg_alert
+    max: 16
+  mt_notice_mt_snapshot_alert:
+    name: Bildirim durumu sensor.mt_snapshot_alert
+    max: 16
+  mt_notice_mt_container_alert:
+    name: Bildirim durumu sensor.mt_container_alert
+    max: 16
+  mt_notice_mt_backup_pi_alert:
+    name: Bildirim durumu sensor.mt_backup_pi_alert
+    max: 16
+  mt_notice_mt_backup_pcold_alert:
+    name: Bildirim durumu sensor.mt_backup_pcold_alert
+    max: 16
+  mt_notice_mt_backup_cloud_alert:
+    name: Bildirim durumu sensor.mt_backup_cloud_alert
+    max: 16
+  mt_notice_mt_backup_request_alert:
+    name: Bildirim durumu sensor.mt_backup_request_alert
+    max: 16
+  mt_notice_mt_camera_policy_alert:
+    name: Bildirim durumu sensor.mt_camera_policy_alert
+    max: 16
+timer:
+  metehantech_sleep:
+    name: Uyku ışığı kapanışı
+    duration: 00:02:00
+    restore: true
+script:
+  metehantech_managed_light:
+    alias: 'İç kullanım: kontrollü ışık komutu'
+    sequence:
+    - action: input_datetime.set_datetime
+      data:
+        timestamp: '{{ as_timestamp(now()) }}'
+      target:
+        entity_id: '{{ ''input_datetime.metehantech_auto_'' ~ entity.split(''.'')[1] }}'
+    - choose:
+      - conditions:
+        - condition: template
+          value_template: '{{ operation == ''off'' }}'
+        sequence:
+        - action: light.turn_off
+          target:
+            entity_id: '{{ entity }}'
+      - conditions:
+        - condition: template
+          value_template: '{{ operation == ''rgb'' }}'
+        sequence:
+        - action: light.turn_on
+          data:
+            brightness_pct: '{{ brightness | int }}'
+            effect: 'Off'
+            hs_color:
+            - 275
+            - 85
+          target:
+            entity_id: '{{ entity }}'
+      default:
+      - action: light.turn_on
+        data:
+          brightness_pct: '{{ brightness | int }}'
+          effect: 'Off'
+          color_temp_kelvin: '{{ [[kelvin | int, state_attr(entity,''min_color_temp_kelvin'') | int(2500)] | max, state_attr(entity,''max_color_temp_kelvin'')
+            | int(6500)] | min }}'
+        target:
+          entity_id: '{{ entity }}'
+    mode: queued
+    max: 20
+  metehantech_apply_mode:
+    alias: 'İç kullanım: ev modu ışıkları'
+    sequence:
+    - action: timer.cancel
+      target:
+        entity_id: timer.metehantech_sleep
+    - action: input_boolean.turn_off
+      target:
+        entity_id:
+        - input_boolean.metehantech_manual_odam_lamba
+        - input_boolean.metehantech_manual_oda_2
+        - input_boolean.metehantech_manual_oda_3
+        - input_boolean.metehantech_manual_oda_4
+        - input_boolean.metehantech_manual_masa_ambiyans
+        - input_boolean.metehantech_owned_odam_lamba
+        - input_boolean.metehantech_owned_oda_2
+        - input_boolean.metehantech_owned_oda_3
+        - input_boolean.metehantech_owned_oda_4
+        - input_boolean.metehantech_owned_masa_ambiyans
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: HOME
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: white
+            brightness: 70
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: white
+            brightness: 70
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: white
+            brightness: 70
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: white
+            brightness: 70
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: white
+            brightness: 30
+            kelvin: 3000
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: AWAY
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: 'off'
+            brightness: 0
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: 'off'
+            brightness: 0
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: 'off'
+            brightness: 0
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: 'off'
+            brightness: 0
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: 'off'
+            brightness: 0
+            kelvin: 3000
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: NIGHT
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: white
+            brightness: 10
+            kelvin: 2700
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: SLEEP
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: WORK
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: white
+            brightness: 90
+            kelvin: 4500
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: white
+            brightness: 90
+            kelvin: 4500
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: white
+            brightness: 90
+            kelvin: 4500
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: white
+            brightness: 90
+            kelvin: 4500
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: white
+            brightness: 100
+            kelvin: 4500
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: MOVIE
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: rgb
+            brightness: 10
+            kelvin: 2700
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: GAMING
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: 'off'
+            brightness: 0
+            kelvin: 2700
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: rgb
+            brightness: 30
+            kelvin: 2700
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: GUEST
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: white
+            brightness: 65
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: white
+            brightness: 65
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: white
+            brightness: 65
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: white
+            brightness: 65
+            kelvin: 3000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: white
+            brightness: 35
+            kelvin: 3000
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: CLEANING
+        sequence:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.odam_lamba
+            operation: white
+            brightness: 100
+            kelvin: 6000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_2
+            operation: white
+            brightness: 100
+            kelvin: 6000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_3
+            operation: white
+            brightness: 100
+            kelvin: 6000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.oda_4
+            operation: white
+            brightness: 100
+            kelvin: 6000
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: light.masa_ambiyans
+            operation: white
+            brightness: 100
+            kelvin: 6000
+    mode: restart
+  metehantech_home:
+    alias: HOME
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: HOME
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: HOME
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_away:
+    alias: AWAY
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: AWAY
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: AWAY
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_night:
+    alias: NIGHT
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: NIGHT
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: NIGHT
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_sleep:
+    alias: SLEEP
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: SLEEP
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: SLEEP
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_work:
+    alias: WORK
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: WORK
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: WORK
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_movie:
+    alias: MOVIE
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: MOVIE
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: MOVIE
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_gaming:
+    alias: GAMING
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: GAMING
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: GAMING
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_guest:
+    alias: GUEST
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: GUEST
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: GUEST
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_cleaning:
+    alias: CLEANING
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.metehantech_mode
+          state: CLEANING
+        sequence:
+        - action: script.metehantech_apply_mode
+      default:
+      - action: input_select.select_option
+        data:
+          option: CLEANING
+        target:
+          entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_all_lights_off:
+    alias: All Lights Off
+    sequence:
+    - action: input_boolean.turn_on
+      target:
+        entity_id:
+        - input_boolean.metehantech_manual_odam_lamba
+        - input_boolean.metehantech_manual_oda_2
+        - input_boolean.metehantech_manual_oda_3
+        - input_boolean.metehantech_manual_oda_4
+        - input_boolean.metehantech_manual_masa_ambiyans
+    - action: input_boolean.turn_off
+      target:
+        entity_id:
+        - input_boolean.metehantech_owned_odam_lamba
+        - input_boolean.metehantech_owned_oda_2
+        - input_boolean.metehantech_owned_oda_3
+        - input_boolean.metehantech_owned_oda_4
+        - input_boolean.metehantech_owned_masa_ambiyans
+    - action: script.metehantech_managed_light
+      continue_on_error: true
+      data:
+        entity: light.odam_lamba
+        operation: 'off'
+        brightness: 0
+        kelvin: 3000
+    - action: script.metehantech_managed_light
+      continue_on_error: true
+      data:
+        entity: light.oda_2
+        operation: 'off'
+        brightness: 0
+        kelvin: 3000
+    - action: script.metehantech_managed_light
+      continue_on_error: true
+      data:
+        entity: light.oda_3
+        operation: 'off'
+        brightness: 0
+        kelvin: 3000
+    - action: script.metehantech_managed_light
+      continue_on_error: true
+      data:
+        entity: light.oda_4
+        operation: 'off'
+        brightness: 0
+        kelvin: 3000
+    - action: script.metehantech_managed_light
+      continue_on_error: true
+      data:
+        entity: light.masa_ambiyans
+        operation: 'off'
+        brightness: 0
+        kelvin: 3000
+    mode: restart
+  metehantech_previous_mode:
+    alias: Önceki moda dön
+    sequence:
+    - action: input_select.select_option
+      data:
+        option: '{% set p=states(''input_select.metehantech_previous_mode'') %}{{ p if p in [''HOME'',''NIGHT'',''WORK'',''GUEST''] or (is_state(''input_select.metehantech_mode'',''CLEANING'')
+          and p in [''AWAY'',''SLEEP'',''MOVIE'',''GAMING'']) else (''NIGHT'' if now().hour >= 23 or now().hour < 7 else ''HOME'') }}'
+      target:
+        entity_id: input_select.metehantech_mode
+    mode: restart
+  metehantech_alert:
+    alias: MetehanTech merkezi bildirim
+    sequence:
+    - variables:
+        notice_entity: '{{ ''input_text.mt_notice_'' ~ source.split(''.'',1)[1] if source in [''sensor.mt_pi5_temperature_alert'', ''sensor.mt_pi5_disk_alert'',
+          ''sensor.mt_pi5_ram_alert'', ''sensor.mt_pi5_cpu_alert'', ''sensor.mt_pi5_online_alert'', ''sensor.mt_pi5_stale_alert'', ''sensor.mt_pcold_temperature_alert'',
+          ''sensor.mt_pcold_disk_alert'', ''sensor.mt_pcold_ram_alert'', ''sensor.mt_pcold_cpu_alert'', ''sensor.mt_pcold_online_alert'', ''sensor.mt_pcold_stale_alert'',
+          ''sensor.mt_throttled_alert'', ''sensor.mt_smart_alert'', ''sensor.mt_pi5_docker_alert'', ''sensor.mt_pcold_docker_alert'', ''sensor.mt_cloudflare_alert'',
+          ''sensor.mt_tailscale_alert'', ''sensor.mt_portainer_alert'', ''sensor.mt_nextcloud_alert'', ''sensor.mt_bridge_alert'', ''sensor.mt_frigate_alert'',
+          ''sensor.mt_camera_alert'', ''sensor.mt_detection_alert'', ''sensor.mt_recording_alert'', ''sensor.mt_ffmpeg_alert'', ''sensor.mt_snapshot_alert'',
+          ''sensor.mt_container_alert'', ''sensor.mt_backup_pi_alert'', ''sensor.mt_backup_pcold_alert'', ''sensor.mt_backup_cloud_alert'', ''sensor.mt_backup_request_alert'',
+          ''sensor.mt_camera_policy_alert''] else '''' }}'
+    - condition: template
+      value_template: '{{ not notice_entity or states(notice_entity) != (severity if severity in [''WARNING'',''CRITICAL''] else ''OK'') }}'
+    - action: logbook.log
+      data:
+        name: MetehanTech {{ severity }}
+        message: '{{ message }}'
+        entity_id: '{{ source | default("sensor.mt_active_alerts") }}'
+    - event: metehantech_alert
+      event_data:
+        severity: '{{ severity }}'
+        source: '{{ source | default("system") }}'
+        message: '{{ message }}'
+        recovery: '{{ recovery | default(false) }}'
+    - choose:
+      - conditions:
+        - condition: template
+          value_template: '{{ severity in [''WARNING'',''CRITICAL''] }}'
+        sequence:
+        - action: persistent_notification.create
+          data:
+            notification_id: mt_{{ source | replace(".","_") }}
+            title: MetehanTech · {{ severity }}
+            message: '{{ message }}'
+        - if:
+          - condition: template
+            value_template: '{{ severity == ''CRITICAL'' or not is_state(''input_select.metehantech_mode'',''MOVIE'') }}'
+          then:
+          - action: notify.mobile_app_ana_cihaz_a72
+            data:
+              title: MetehanTech · {{ severity }}
+              message: '{{ message }}'
+              data:
+                tag: mt_{{ source }}
+                group: metehantech-system
+                channel: MetehanTech Sistem
+                priority: '{{ ''high'' if severity == ''CRITICAL'' else ''normal'' }}'
+      default:
+      - action: persistent_notification.dismiss
+        data:
+          notification_id: mt_{{ source | replace(".","_") }}
+    - if:
+      - condition: template
+        value_template: '{{ notice_entity != '''' }}'
+      then:
+      - action: input_text.set_value
+        data:
+          value: '{{ severity if severity in [''WARNING'',''CRITICAL''] else ''OK'' }}'
+        target:
+          entity_id: '{{ notice_entity }}'
+    mode: queued
+    max: 50
+  metehantech_ambient:
+    alias: 'İç kullanım: saat uyumlu ışık'
+    sequence:
+    - repeat:
+        for_each: &id003
+        - light.odam_lamba
+        - light.oda_2
+        - light.oda_3
+        - light.oda_4
+        sequence:
+        - if:
+          - condition: template
+            value_template: '{{ is_state(''input_boolean.metehantech_manual_'' ~ repeat.item.split(''.'')[1],''off'') and (turn_on | default(false)
+              or is_state(repeat.item,''on'')) }}'
+          then:
+          - action: script.metehantech_managed_light
+            continue_on_error: true
+            data:
+              entity: '{{ repeat.item }}'
+              operation: white
+              brightness: '{{ (25 if now().hour >= 23 or now().hour < 7 else 65) if turn_on | default(false) else ((state_attr(repeat.item,''brightness'')
+                | int(166))*100/255) | round(0) }}'
+              kelvin: '{{ 2700 if now().hour >= 23 or now().hour < 7 else (3200 if now().hour >= 21 else 4000) }}'
+          - if:
+            - condition: template
+              value_template: '{{ turn_on | default(false) }}'
+            then:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: '{{ ''input_boolean.metehantech_owned_'' ~ repeat.item.split(''.'')[1] }}'
+    mode: restart
+  metehantech_backup_pi:
+    alias: Şimdi Yedekle · Pi5 → PcOld
+    sequence:
+    - condition: template
+      value_template: '{{ is_state(''binary_sensor.pcold_online'',''on'') and (state_attr(''sensor.mt_runtime'',''backup_active'') or []) | length
+        == 0 and as_timestamp(now())-(states(''sensor.mt_runtime'') | float(0)) < 120 }}'
+    - action: shell_command.metehantech_backup_pi
+      response_variable: request
+    - action: logbook.log
+      data:
+        name: Backup isteği
+        message: '{{ ''İstek kuyruğa alındı; çalıştırma öncesi disk ve kilit kontrolü yapılacak.'' if request.returncode == 0 else ''İstek oluşturulamadı
+          veya zaten bekliyor.'' }}'
+    mode: restart
+  metehantech_backup_pcold:
+    alias: Şimdi Yedekle · PcOld → Pi5
+    sequence:
+    - condition: template
+      value_template: '{{ is_state(''binary_sensor.pcold_online'',''on'') and (state_attr(''sensor.mt_runtime'',''backup_active'') or []) | length
+        == 0 and as_timestamp(now())-(states(''sensor.mt_runtime'') | float(0)) < 120 }}'
+    - action: shell_command.metehantech_backup_pcold
+      response_variable: request
+    - action: logbook.log
+      data:
+        name: Backup isteği
+        message: '{{ ''İstek kuyruğa alındı; çalıştırma öncesi disk ve kilit kontrolü yapılacak.'' if request.returncode == 0 else ''İstek oluşturulamadı
+          veya zaten bekliyor.'' }}'
+    mode: restart
+  metehantech_camera_presence:
+    alias: Kamera · telefon konumuna göre aç/kapat
+    sequence:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: device_tracker.ana_cihaz_a72
+          state: home
+        sequence:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.metehantech_camera_away
+        - if:
+          - condition: template
+            value_template: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined
+              else none) %}{{ en is not none and en }}'
+          then:
+          - action: mqtt.publish
+            data:
+              topic: frigate/tapo_c211/enabled/set
+              payload: 'OFF'
+              retain: false
+          - action: logbook.log
+            data:
+              name: Kamera gizliliği
+              message: 'Telefon evde: Frigate kamera işleme ve kayıt kapatıldı.'
+              entity_id: camera.tapo_c211
+      - conditions:
+        - condition: template
+          value_template: '{{ states(''device_tracker.ana_cihaz_a72'') not in [''home'',''unknown'',''unavailable'',''none'',''''] }}'
+        sequence:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.metehantech_camera_away
+        - if:
+          - condition: template
+            value_template: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined
+              else none) %}{{ en is not none and not en }}'
+          then:
+          - action: mqtt.publish
+            data:
+              topic: frigate/tapo_c211/enabled/set
+              payload: 'ON'
+              retain: false
+          - action: logbook.log
+            data:
+              name: Kamera güvenliği
+              message: 'Telefon ev dışında: kamera işlemeye ve kayda başlatıldı.'
+              entity_id: camera.tapo_c211
+        - repeat:
+            for_each:
+            - switch.tapo_c211_detect
+            - switch.tapo_c211_recordings
+            - switch.tapo_c211_snapshots
+            sequence:
+            - if:
+              - condition: template
+                value_template: '{{ is_state(repeat.item,''off'') }}'
+              then:
+              - action: switch.turn_on
+                target:
+                  entity_id: '{{ repeat.item }}'
+    mode: single
+    max_exceeded: silent
+automation:
+- id: metehantech_mode_changed
+  alias: MetehanTech Ev · Mod değişimi
+  triggers:
+  - trigger: state
+    entity_id: input_select.metehantech_mode
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.from_state is not none and trigger.to_state is not none and trigger.from_state.state in [''HOME'', ''AWAY'', ''NIGHT'',
+      ''SLEEP'', ''WORK'', ''MOVIE'', ''GAMING'', ''GUEST'', ''CLEANING''] and trigger.to_state.state in [''HOME'', ''AWAY'', ''NIGHT'', ''SLEEP'',
+      ''WORK'', ''MOVIE'', ''GAMING'', ''GUEST'', ''CLEANING''] and trigger.from_state.state != trigger.to_state.state }}'
+  actions:
+  - action: input_select.select_option
+    data:
+      option: '{{ trigger.from_state.state }}'
+    target:
+      entity_id: input_select.metehantech_previous_mode
+  - action: logbook.log
+    data:
+      name: Ev modu
+      message: '{{ trigger.from_state.state }} → {{ trigger.to_state.state }}'
+      entity_id: input_select.metehantech_mode
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == ''HOME'' and trigger.to_state.context.user_id is none and trigger.to_state.context.parent_id
+          is not none }}'
+      sequence:
+      - action: input_boolean.turn_off
+        target:
+          entity_id:
+          - input_boolean.metehantech_manual_odam_lamba
+          - input_boolean.metehantech_manual_oda_2
+          - input_boolean.metehantech_manual_oda_3
+          - input_boolean.metehantech_manual_oda_4
+          - input_boolean.metehantech_manual_masa_ambiyans
+          - input_boolean.metehantech_owned_odam_lamba
+          - input_boolean.metehantech_owned_oda_2
+          - input_boolean.metehantech_owned_oda_3
+          - input_boolean.metehantech_owned_oda_4
+          - input_boolean.metehantech_owned_masa_ambiyans
+      - if:
+        - condition: state
+          entity_id: sun.sun
+          state: below_horizon
+        then:
+        - action: script.metehantech_ambient
+          data:
+            turn_on: true
+    default:
+    - action: script.metehantech_apply_mode
+  mode: restart
+- id: metehantech_sleep_finish
+  alias: MetehanTech Işıklar · Uyku kapanışı
+  triggers:
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.metehantech_sleep
+  conditions:
+  - condition: state
+    entity_id: input_select.metehantech_mode
+    state: SLEEP
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.metehantech_manual_masa_ambiyans
+    state: 'off'
+  actions:
+  - action: script.metehantech_managed_light
+    continue_on_error: true
+    data:
+      entity: light.masa_ambiyans
+      operation: 'off'
+      brightness: 0
+      kelvin: 3000
+  mode: single
+  initial_state: false
+- id: metehantech_manual_ui
+  alias: MetehanTech Işıklar · Manuel HA kontrolünü koru
+  triggers:
+  - trigger: event
+    event_type: call_service
+    event_data:
+      domain: light
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.event.context.user_id is not none and trigger.event.context.parent_id is none and not (is_state(''script.metehantech_managed_light'',''on'')
+      and trigger.event.context.id == states.script.metehantech_managed_light.context.id) and trigger.event.data.service in [''turn_on'',''turn_off'',''toggle'']
+      }}'
+  actions:
+  - variables:
+      targets: '{{ trigger.event.data.service_data.entity_id | default([]) }}'
+  - repeat:
+      for_each: &id002
+      - light.odam_lamba
+      - light.oda_2
+      - light.oda_3
+      - light.oda_4
+      - light.masa_ambiyans
+      sequence:
+      - if:
+        - condition: template
+          value_template: '{{ repeat.item in targets or ''light.tum_isiklar'' in targets or targets == ''all'' or trigger.event.data.service_data.area_id
+            is defined or trigger.event.data.service_data.device_id is defined or trigger.event.data.service_data.label_id is defined }}'
+        then:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: '{{ ''input_boolean.metehantech_manual_'' ~ repeat.item.split(''.'')[1] }}'
+        - action: input_boolean.turn_off
+          target:
+            entity_id: '{{ ''input_boolean.metehantech_owned_'' ~ repeat.item.split(''.'')[1] }}'
+  mode: queued
+- id: metehantech_manual_physical
+  alias: MetehanTech Işıklar · Harici manuel değişimi koru
+  triggers:
+  - trigger: state
+    entity_id: *id002
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.from_state is not none and trigger.to_state is not none and trigger.from_state.state in [''on'',''off''] and trigger.to_state.state
+      in [''on'',''off''] and trigger.to_state.context.parent_id is none and (as_timestamp(now()) - as_timestamp(states(''input_datetime.metehantech_auto_''
+      ~ trigger.entity_id.split(''.'')[1]),0)) > 15 and (trigger.from_state.state != trigger.to_state.state or trigger.from_state.attributes.get(''brightness'')
+      != trigger.to_state.attributes.get(''brightness'') or trigger.from_state.attributes.get(''color_temp_kelvin'') != trigger.to_state.attributes.get(''color_temp_kelvin'')
+      or trigger.from_state.attributes.get(''hs_color'') != trigger.to_state.attributes.get(''hs_color'')) }}'
+  actions:
+  - action: input_boolean.turn_on
+    target:
+      entity_id: '{{ ''input_boolean.metehantech_manual_'' ~ trigger.entity_id.split(''.'')[1] }}'
+  - action: input_boolean.turn_off
+    target:
+      entity_id: '{{ ''input_boolean.metehantech_owned_'' ~ trigger.entity_id.split(''.'')[1] }}'
+  mode: queued
+- id: metehantech_startup_preserve
+  alias: MetehanTech Işıklar · Başlangıçta manuel ayarı koru
+  triggers:
+  - trigger: homeassistant
+    event: start
+  conditions: []
+  actions:
+  - delay: 00:00:20
+  - repeat:
+      for_each: *id002
+      sequence:
+      - if:
+        - condition: template
+          value_template: '{{ is_state(repeat.item,''on'') }}'
+        then:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: '{{ ''input_boolean.metehantech_manual_'' ~ repeat.item.split(''.'')[1] }}'
+  mode: single
+- id: metehantech_sunset
+  alias: MetehanTech Işıklar · Gün batımı
+  triggers:
+  - trigger: sun
+    event: sunset
+  conditions:
+  - condition: state
+    entity_id: input_select.metehantech_mode
+    state: HOME
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - action: script.metehantech_ambient
+    data:
+      turn_on: true
+  mode: single
+- id: metehantech_warm_evening
+  alias: MetehanTech Işıklar · Akşam renk sıcaklığı
+  triggers:
+  - trigger: time
+    at: '19:00:00'
+  - trigger: time
+    at: '21:00:00'
+  - trigger: time
+    at: '23:00:00'
+  conditions:
+  - condition: template
+    value_template: '{{ states(''input_select.metehantech_mode'') in [''HOME'',''WORK''] }}'
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - action: script.metehantech_ambient
+    data:
+      turn_on: false
+  mode: single
+- id: metehantech_sunrise
+  alias: MetehanTech Işıklar · Sadece otomatik akşam ışığını kapat
+  triggers:
+  - trigger: sun
+    event: sunrise
+  conditions:
+  - condition: state
+    entity_id: input_select.metehantech_mode
+    state: HOME
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - repeat:
+      for_each: *id003
+      sequence:
+      - if:
+        - condition: template
+          value_template: '{{ is_state(''input_boolean.metehantech_owned_'' ~ repeat.item.split(''.'')[1],''on'') and is_state(''input_boolean.metehantech_manual_''
+            ~ repeat.item.split(''.'')[1],''off'') }}'
+        then:
+        - action: script.metehantech_managed_light
+          continue_on_error: true
+          data:
+            entity: '{{ repeat.item }}'
+            operation: 'off'
+            brightness: 0
+            kelvin: 3000
+        - action: input_boolean.turn_off
+          target:
+            entity_id: '{{ ''input_boolean.metehantech_owned_'' ~ repeat.item.split(''.'')[1] }}'
+  mode: single
+- id: metehantech_night_defaults
+  alias: MetehanTech Işıklar · 02–07 fiziksel açılış
+  triggers:
+  - trigger: state
+    entity_id: *id002
+    from: 'off'
+    to: 'on'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  - condition: template
+    value_template: '{{ 2 <= now().hour < 7 and states(''input_select.metehantech_mode'') in [''HOME'',''NIGHT'',''SLEEP''] and trigger.to_state.context.user_id
+      is none and trigger.to_state.context.parent_id is none and is_state(''input_boolean.metehantech_manual_'' ~ trigger.entity_id.split(''.'')[1],''off'')
+      and as_timestamp(now())-as_timestamp(states(''input_datetime.metehantech_auto_'' ~ trigger.entity_id.split(''.'')[1]),0)>15 }}'
+  actions:
+  - action: script.metehantech_managed_light
+    continue_on_error: true
+    data:
+      entity: '{{ trigger.entity_id }}'
+      operation: white
+      brightness: 20
+      kelvin: 2700
+  - action: input_boolean.turn_on
+    target:
+      entity_id: '{{ ''input_boolean.metehantech_manual_'' ~ trigger.entity_id.split(''.'')[1] }}'
+  mode: single
+  initial_state: false
+- id: metehantech_away_stray
+  alias: MetehanTech Işıklar · AWAY açık kalan ışık
+  triggers:
+  - trigger: state
+    entity_id: *id002
+    to: 'on'
+    for: 00:03:00
+  conditions:
+  - condition: state
+    entity_id: input_select.metehantech_mode
+    state: AWAY
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  - condition: template
+    value_template: '{{ is_state(''input_boolean.metehantech_manual_'' ~ trigger.entity_id.split(''.'')[1],''off'') }}'
+  actions:
+  - action: script.metehantech_managed_light
+    continue_on_error: true
+    data:
+      entity: '{{ trigger.entity_id }}'
+      operation: 'off'
+      brightness: 0
+      kelvin: 3000
+  mode: single
+- id: metehantech_presence
+  alias: MetehanTech Ev · Güvenilir presence ile HOME AWAY
+  triggers:
+  - trigger: state
+    entity_id: person.metehan
+    to: home
+    for: 00:02:00
+    id: home
+  - trigger: state
+    entity_id: person.metehan
+    to: not_home
+    for: 00:10:00
+    id: away
+  conditions:
+  - condition: state
+    entity_id: input_boolean.metehantech_presence_enabled
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.id == ''away'' and states(''input_select.metehantech_mode'') in [''HOME'',''NIGHT''] }}'
+      sequence:
+      - action: script.metehantech_away
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.id == ''home'' and is_state(''input_select.metehantech_mode'',''AWAY'') }}'
+      sequence:
+      - action: input_select.select_option
+        data:
+          option: HOME
+        target:
+          entity_id: input_select.metehantech_mode
+  mode: single
+- id: metehantech_work_break
+  alias: MetehanTech Ev · İsteğe bağlı çalışma molası
+  triggers:
+  - trigger: state
+    entity_id: input_select.metehantech_mode
+    to: WORK
+    for: 01:00:00
+  conditions:
+  - condition: state
+    entity_id: input_boolean.metehantech_break_enabled
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - action: script.metehantech_alert
+    data:
+      source: input_select.metehantech_mode
+      severity: INFO
+      message: Bir saattir WORK modundasın; kısa bir mola verebilirsin.
+  mode: single
+- id: metehantech_backup_lifecycle
+  alias: MetehanTech Backup · Sonuç ve recovery günlüğü
+  triggers:
+  - trigger: state
+    entity_id: sensor.mt_runtime
+    attribute: backups
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.from_state is not none and trigger.to_state is not none }}'
+  actions:
+  - repeat:
+      for_each:
+      - pi
+      - pcold
+      - cloud
+      sequence:
+      - variables:
+          new: '{{ (trigger.to_state.attributes.backups or {}).get(repeat.item,{}) }}'
+          old: '{{ (trigger.from_state.attributes.backups | default({})).get(repeat.item,{}) }}'
+      - if:
+        - condition: template
+          value_template: '{{ new.get(''status'') in [''success'',''running'',''failed'',''verification_failed''] and (new.get(''status'') !=
+            old.get(''status'') or new.get(''finished_at'') != old.get(''finished_at'')) }}'
+        then:
+        - action: logbook.log
+          data:
+            name: Backup · {{ repeat.item }}
+            message: '{{ new.get(''status'') }} · {{ new.get(''phase'','''') }}'
+            entity_id: sensor.mt_runtime
+        - event: metehantech_alert
+          event_data:
+            severity: '{{ ''WARNING'' if new.get(''status'') in [''failed'',''verification_failed''] else ''INFO'' }}'
+            source: sensor.mt_runtime
+            message: 'Backup {{ repeat.item }}: {{ new.get(''status'') }}'
+            recovery: '{{ new.get(''status'') == ''success'' }}'
+  mode: queued
+- id: metehantech_camera_presence
+  alias: MetehanTech Güvenlik · Evde kapalı / dışarıda aktif
+  triggers:
+  - trigger: state
+    entity_id:
+    - device_tracker.ana_cihaz_a72
+    - sensor.mt_runtime
+    to: null
+  - trigger: homeassistant
+    event: start
+  - trigger: mqtt
+    topic: frigate/available
+    payload: online
+  - trigger: time_pattern
+    minutes: /1
+  conditions: []
+  actions:
+  - action: script.metehantech_camera_presence
+  mode: single
+  max_exceeded: silent
+- id: metehantech_health_notifications
+  alias: MetehanTech Sistem · Sorun / yükselme / recovery
+  triggers:
+  - trigger: state
+    entity_id: &id004
+    - sensor.mt_pi5_temperature_alert
+    - sensor.mt_pi5_disk_alert
+    - sensor.mt_pi5_ram_alert
+    - sensor.mt_pi5_cpu_alert
+    - sensor.mt_pi5_online_alert
+    - sensor.mt_pi5_stale_alert
+    - sensor.mt_pcold_temperature_alert
+    - sensor.mt_pcold_disk_alert
+    - sensor.mt_pcold_ram_alert
+    - sensor.mt_pcold_cpu_alert
+    - sensor.mt_pcold_online_alert
+    - sensor.mt_pcold_stale_alert
+    - sensor.mt_throttled_alert
+    - sensor.mt_smart_alert
+    - sensor.mt_pi5_docker_alert
+    - sensor.mt_pcold_docker_alert
+    - sensor.mt_cloudflare_alert
+    - sensor.mt_tailscale_alert
+    - sensor.mt_portainer_alert
+    - sensor.mt_nextcloud_alert
+    - sensor.mt_bridge_alert
+    - sensor.mt_frigate_alert
+    - sensor.mt_camera_alert
+    - sensor.mt_detection_alert
+    - sensor.mt_recording_alert
+    - sensor.mt_ffmpeg_alert
+    - sensor.mt_snapshot_alert
+    - sensor.mt_container_alert
+    - sensor.mt_backup_pi_alert
+    - sensor.mt_backup_pcold_alert
+    - sensor.mt_backup_cloud_alert
+    - sensor.mt_backup_request_alert
+    - sensor.mt_camera_policy_alert
+    for: 00:01:00
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.to_state is not none and trigger.from_state is not none and trigger.to_state.state != trigger.from_state.state
+      and (trigger.to_state.state in [''WARNING'',''CRITICAL''] or (trigger.to_state.state in [''OK'',''PAUSED''] and trigger.from_state.state
+      in [''WARNING'',''CRITICAL''])) }}'
+  actions:
+  - variables:
+      source: '{{ trigger.entity_id }}'
+      label: '{{ trigger.to_state.attributes.friendly_label | default(trigger.entity_id) }}'
+  - action: script.metehantech_alert
+    data:
+      source: '{{ source }}'
+      severity: '{{ trigger.to_state.state if trigger.to_state.state in [''WARNING'',''CRITICAL''] else ''INFO'' }}'
+      message: '{{ label }}: {{ trigger.to_state.state }}{{ '' · düzeldi / bilinçli kapalı'' if trigger.to_state.state in [''OK'',''PAUSED'']
+        else '''' }}'
+      recovery: '{{ trigger.to_state.state in [''OK'',''PAUSED''] }}'
+  mode: queued
+  max: 50
+- id: metehantech_health_startup
+  alias: MetehanTech Sistem · Başlangıç sağlık kontrolü
+  triggers:
+  - trigger: homeassistant
+    event: start
+  conditions: []
+  actions:
+  - delay: 00:02:00
+  - repeat:
+      for_each: *id004
+      sequence:
+      - if:
+        - condition: template
+          value_template: '{{ states(repeat.item) in [''WARNING'',''CRITICAL''] }}'
+        then:
+        - action: script.metehantech_alert
+          data:
+            source: '{{ repeat.item }}'
+            severity: '{{ states(repeat.item) }}'
+            message: '{{ state_attr(repeat.item,''friendly_label'') }}: {{ states(repeat.item) }} (başlangıç kontrolü)'
+  mode: single
+- id: metehantech_weather_morning
+  alias: MetehanTech Ev · Sabah yağmur bilgisi
+  triggers:
+  - trigger: time
+    at: 07:30:00
+  conditions:
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - action: weather.get_forecasts
+    response_variable: forecast
+    data:
+      type: hourly
+    target:
+      entity_id: weather.forecast_home
+  - variables:
+      rain: '{{ forecast.get(''weather.forecast_home'',{}).get(''forecast'',[])[:6] | selectattr(''condition'',''in'',[''rainy'',''pouring'',''lightning-rainy''])
+        | list | length > 0 }}'
+  - if:
+    - condition: template
+      value_template: '{{ rain }}'
+    then:
+    - action: script.metehantech_alert
+      data:
+        source: weather.forecast_home
+        severity: INFO
+        message: Önümüzdeki 6 saatte yağmur bekleniyor.
+  mode: single
+- id: metehantech_weather_severe
+  alias: MetehanTech Ev · Şiddetli hava dashboard uyarısı
+  triggers:
+  - trigger: state
+    entity_id: weather.forecast_home
+    to: exceptional
+    for: 00:05:00
+  - trigger: state
+    entity_id: weather.forecast_home
+    to: hail
+    for: 00:05:00
+  - trigger: state
+    entity_id: weather.forecast_home
+    to: lightning-rainy
+    for: 00:05:00
+  - trigger: state
+    entity_id: weather.forecast_home
+    to: pouring
+    for: 00:05:00
+  conditions:
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  actions:
+  - action: script.metehantech_alert
+    data:
+      source: weather.forecast_home
+      severity: INFO
+      message: 'Şiddetli hava koşulu: {{ states("weather.forecast_home") }}. Hava kartını kontrol et.'
+  mode: single
+- id: metehantech_weather_uv
+  alias: MetehanTech Ev · Yüksek UV dashboard bilgisi
+  triggers:
+  - trigger: time
+    at: '10:00:00'
+  - trigger: time
+    at: '13:00:00'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.metehantech_pause
+    state: 'off'
+  - condition: template
+    value_template: '{{ state_attr(''weather.forecast_home'',''uv_index'') is number and state_attr(''weather.forecast_home'',''uv_index'') >=
+      6 }}'
+  actions:
+  - action: script.metehantech_alert
+    data:
+      source: weather.forecast_home
+      severity: INFO
+      message: 'UV indeksi yüksek: {{ state_attr(''weather.forecast_home'',''uv_index'') }}'
+  mode: single
+template:
+- sensor:
+  - name: MT Pi5 Temperature Alert
+    unique_id: mt_pi5_temperature_alert
+    state: '{% set v=states(''sensor.pi5_temperature'') %}{{ ''UNKNOWN'' if not is_number(v) else (''CRITICAL'' if v|float >= 82 else (''WARNING''
+      if v|float >= 75 else ''OK'')) }}'
+    attributes:
+      friendly_label: Pi5 sıcaklık
+- sensor:
+  - name: MT Pi5 Disk Alert
+    unique_id: mt_pi5_disk_alert
+    state: '{% set v=states(''sensor.pi5_disk'') %}{{ ''UNKNOWN'' if not is_number(v) else (''CRITICAL'' if v|float >= 95 else (''WARNING'' if
+      v|float >= 85 else ''OK'')) }}'
+    attributes:
+      friendly_label: Pi5 disk
+- sensor:
+  - name: MT Pi5 Ram Alert
+    unique_id: mt_pi5_ram_alert
+    state: '{% set v=states(''sensor.pi5_ram'') %}{{ ''UNKNOWN'' if not is_number(v) else (''CRITICAL'' if v|float >= 101 else (''WARNING'' if
+      v|float >= 90 else ''OK'')) }}'
+    attributes:
+      friendly_label: Pi5 RAM
+- binary_sensor:
+  - name: MT pi5 CPU Sustained
+    unique_id: mt_pi5_cpu_sustained
+    state: '{{ states(''sensor.pi5_cpu'') | float(0) > 90 }}'
+    availability: '{{ is_number(states(''sensor.pi5_cpu'')) }}'
+    delay_on: 00:05:00
+- sensor:
+  - name: MT Pi5 Cpu Alert
+    unique_id: mt_pi5_cpu_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.mt_pi5_cpu_sustained'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.mt_pi5_cpu_sustained'',''on'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: Pi5 CPU 5 dakika >%90
+- sensor:
+  - name: MT Pi5 Online Alert
+    unique_id: mt_pi5_online_alert
+    state: '{{ ''OK'' if is_state(''binary_sensor.pi5_online'',''on'') else ''WARNING'' }}'
+    attributes:
+      friendly_label: Pi5 çevrimdışı
+- sensor:
+  - name: MT Pi5 Stale Alert
+    unique_id: mt_pi5_stale_alert
+    state: '{% set t=(state_attr(''sensor.mt_runtime'',''metrics_time'') or {}).get(''pi5'') %}{% set age=as_timestamp(now())-(t|float(0)) %}{{
+      ''UNKNOWN'' if not t else (''CRITICAL'' if age>300 else (''WARNING'' if age>120 else ''OK'')) }}'
+    attributes:
+      friendly_label: Pi5 metrik güncelliği
+- sensor:
+  - name: MT Pcold Temperature Alert
+    unique_id: mt_pcold_temperature_alert
+    state: '{% set v=states(''sensor.pcold_temperature'') %}{{ ''UNKNOWN'' if not is_number(v) else (''CRITICAL'' if v|float >= 82 else (''WARNING''
+      if v|float >= 75 else ''OK'')) }}'
+    attributes:
+      friendly_label: PcOld sıcaklık
+- sensor:
+  - name: MT Pcold Disk Alert
+    unique_id: mt_pcold_disk_alert
+    state: '{% set v=states(''sensor.pcold_disk'') %}{{ ''UNKNOWN'' if not is_number(v) else (''CRITICAL'' if v|float >= 95 else (''WARNING''
+      if v|float >= 85 else ''OK'')) }}'
+    attributes:
+      friendly_label: PcOld disk
+- sensor:
+  - name: MT Pcold Ram Alert
+    unique_id: mt_pcold_ram_alert
+    state: '{% set v=states(''sensor.pcold_ram'') %}{{ ''UNKNOWN'' if not is_number(v) else (''CRITICAL'' if v|float >= 101 else (''WARNING''
+      if v|float >= 90 else ''OK'')) }}'
+    attributes:
+      friendly_label: PcOld RAM
+- binary_sensor:
+  - name: MT pcold CPU Sustained
+    unique_id: mt_pcold_cpu_sustained
+    state: '{{ states(''sensor.pcold_cpu'') | float(0) > 90 }}'
+    availability: '{{ is_number(states(''sensor.pcold_cpu'')) }}'
+    delay_on: 00:05:00
+- sensor:
+  - name: MT Pcold Cpu Alert
+    unique_id: mt_pcold_cpu_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.mt_pcold_cpu_sustained'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.mt_pcold_cpu_sustained'',''on'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: PcOld CPU 5 dakika >%90
+- sensor:
+  - name: MT Pcold Online Alert
+    unique_id: mt_pcold_online_alert
+    state: '{{ ''OK'' if is_state(''binary_sensor.pcold_online'',''on'') else ''WARNING'' }}'
+    attributes:
+      friendly_label: PcOld çevrimdışı
+- sensor:
+  - name: MT Pcold Stale Alert
+    unique_id: mt_pcold_stale_alert
+    state: '{% set t=(state_attr(''sensor.mt_runtime'',''metrics_time'') or {}).get(''pcold'') %}{% set age=as_timestamp(now())-(t|float(0)) %}{{
+      ''UNKNOWN'' if not t else (''CRITICAL'' if age>300 else (''WARNING'' if age>120 else ''OK'')) }}'
+    attributes:
+      friendly_label: PcOld metrik güncelliği
+- sensor:
+  - name: MT Throttled Alert
+    unique_id: mt_throttled_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pi5_throttled'') not in [''on'',''off''] else (''CRITICAL'' if is_state(''binary_sensor.pi5_throttled'',''on'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: Pi5 throttling
+- sensor:
+  - name: MT Smart Alert
+    unique_id: mt_smart_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pcold_smart'') not in [''on'',''off''] else (''CRITICAL'' if is_state(''binary_sensor.pcold_smart'',''on'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: PcOld SMART
+- sensor:
+  - name: MT Pi5 Docker Alert
+    unique_id: mt_pi5_docker_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pi5_docker'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.pi5_docker'',''off'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: Pi5 Docker
+- sensor:
+  - name: MT Pcold Docker Alert
+    unique_id: mt_pcold_docker_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pcold_docker'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.pcold_docker'',''off'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: PcOld Docker
+- sensor:
+  - name: MT Cloudflare Alert
+    unique_id: mt_cloudflare_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pi5_cloudflared'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.pi5_cloudflared'',''off'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: Cloudflare
+- sensor:
+  - name: MT Tailscale Alert
+    unique_id: mt_tailscale_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pi5_tailscale'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.pi5_tailscale'',''off'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: Tailscale
+- sensor:
+  - name: MT Portainer Alert
+    unique_id: mt_portainer_alert
+    state: '{{ ''UNKNOWN'' if states(''binary_sensor.pcold_portainer'') not in [''on'',''off''] else (''WARNING'' if is_state(''binary_sensor.pcold_portainer'',''off'')
+      else ''OK'') }}'
+    attributes:
+      friendly_label: PcOld Portainer
+- sensor:
+  - name: MT Nextcloud Alert
+    unique_id: mt_nextcloud_alert
+    state: '{{ ''OK'' if is_state(''sensor.pi5_nextcloud'',''OK'') else ''WARNING'' }}'
+    attributes:
+      friendly_label: Nextcloud
+- sensor:
+  - name: MT Bridge Alert
+    unique_id: mt_bridge_alert
+    state: '{% set age=as_timestamp(now())-states(''sensor.mt_runtime'')|float(0) %}{{ ''CRITICAL'' if age>300 else (''WARNING'' if age>120 or
+      (state_attr(''sensor.mt_runtime'',''errors'') or [])|length > 0 else ''OK'') }}'
+    attributes:
+      friendly_label: Yerel metrik bağlantısı
+- sensor:
+  - name: MT Frigate Alert
+    unique_id: mt_frigate_alert
+    state: '{{ ''OK'' if is_state(''sensor.frigate_status'',''running'') else ''WARNING'' }}'
+    attributes:
+      friendly_label: Frigate süreç
+- sensor:
+  - name: MT Camera Alert
+    unique_id: mt_camera_alert
+    state: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined else none)
+      %}{% if en is not none and not en and is_state(''input_boolean.metehantech_camera_away'',''off'') %}PAUSED{% else %}{% set f=state_attr(''sensor.mt_runtime'',''frigate'')
+      or {} %}{{ ''UNKNOWN'' if f.get(''camera_fps'') is none else (''OK'' if f.camera_fps|float>0 else ''WARNING'') }}{% endif %}'
+    attributes:
+      friendly_label: Kamera akışı
+- sensor:
+  - name: MT Detection Alert
+    unique_id: mt_detection_alert
+    state: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined else none)
+      %}{% if en is not none and not en and is_state(''input_boolean.metehantech_camera_away'',''off'') %}PAUSED{% else %}{% set f=state_attr(''sensor.mt_runtime'',''frigate'')
+      or {} %}{{ ''UNKNOWN'' if not f else (''OK'' if f.get(''detection_enabled'') and f.get(''detector_pid'') and f.get(''process_fps'',0)|float>0
+      and is_state(''switch.tapo_c211_detect'',''on'') else ''WARNING'') }}{% endif %}'
+    attributes:
+      friendly_label: Frigate detection
+- sensor:
+  - name: MT Recording Alert
+    unique_id: mt_recording_alert
+    state: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined else none)
+      %}{% if en is not none and not en and is_state(''input_boolean.metehantech_camera_away'',''off'') %}PAUSED{% else %}{% set f=state_attr(''sensor.mt_runtime'',''frigate'')
+      or {} %}{{ ''UNKNOWN'' if f.get(''recording_age'') is none or (not f.get(''recording_observed'',true) and f.recording_age|float<=120) else
+      (''CRITICAL'' if f.recording_age|float>300 else (''WARNING'' if f.recording_age|float>120 or not is_state(''switch.tapo_c211_recordings'',''on'')
+      else ''OK'')) }}{% endif %}'
+    attributes:
+      friendly_label: Frigate kayıt ilerlemesi
+- sensor:
+  - name: MT Ffmpeg Alert
+    unique_id: mt_ffmpeg_alert
+    state: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined else none)
+      %}{% if en is not none and not en and is_state(''input_boolean.metehantech_camera_away'',''off'') %}PAUSED{% else %}{% set f=state_attr(''sensor.mt_runtime'',''frigate'')
+      or {} %}{{ ''UNKNOWN'' if not f else (''CRITICAL'' if f.get(''ffmpeg_changes_10m'',0)|int>=3 else (''WARNING'' if not f.get(''ffmpeg_pid'')
+      else ''OK'')) }}{% endif %}'
+    attributes:
+      friendly_label: FFmpeg 10 dakika süreç değişimleri
+- sensor:
+  - name: MT Snapshot Alert
+    unique_id: mt_snapshot_alert
+    state: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined else none)
+      %}{% if en is not none and not en and is_state(''input_boolean.metehantech_camera_away'',''off'') %}PAUSED{% else %}{% set f=state_attr(''sensor.mt_runtime'',''frigate'')
+      or {} %}{{ ''UNKNOWN'' if not f else (''WARNING'' if f.get(''snapshots_missing'') or not is_state(''switch.tapo_c211_snapshots'',''on'')
+      else ''OK'') }}{% endif %}'
+    attributes:
+      friendly_label: Frigate snapshot üretimi
+- sensor:
+  - name: MT Container Alert
+    unique_id: mt_container_alert
+    state: '{% set rows=state_attr(''sensor.mt_runtime'',''containers'') or {} %}{% set ns=namespace(bad=false) %}{% for v in rows.values() %}{%
+      if v.state != ''running'' or v.health == ''unhealthy'' %}{% set ns.bad=true %}{% endif %}{% endfor %}{{ ''UNKNOWN'' if not rows else (''CRITICAL''
+      if state_attr(''sensor.mt_runtime'',''container_restarts_10m'')|int(0)>=3 else (''WARNING'' if ns.bad else ''OK'')) }}'
+    attributes:
+      friendly_label: Docker servis sağlığı
+- sensor:
+  - name: MT Backup Pi Alert
+    unique_id: mt_backup_pi_alert
+    state: '{% set b=(state_attr(''sensor.mt_runtime'',''backups'') or {}).get(''pi'',{}) %}{% set last=as_timestamp(b.get(''last_success''),none)
+      %}{% set age=(as_timestamp(now())-last)/3600 if last is not none else none %}{{ ''UNKNOWN'' if not b else (''CRITICAL'' if age is not none
+      and age>=48 else (''WARNING'' if age is none or age>=24 or b.get(''status'') in [''failed'',''verification_failed''] else ''OK'')) }}'
+    attributes:
+      friendly_label: pi backup
+- sensor:
+  - name: MT Backup Pcold Alert
+    unique_id: mt_backup_pcold_alert
+    state: '{% set b=(state_attr(''sensor.mt_runtime'',''backups'') or {}).get(''pcold'',{}) %}{% set last=as_timestamp(b.get(''last_success''),none)
+      %}{% set age=(as_timestamp(now())-last)/3600 if last is not none else none %}{{ ''UNKNOWN'' if not b else (''CRITICAL'' if age is not none
+      and age>=48 else (''WARNING'' if age is none or age>=24 or b.get(''status'') in [''failed'',''verification_failed''] else ''OK'')) }}'
+    attributes:
+      friendly_label: pcold backup
+- sensor:
+  - name: MT Backup Cloud Alert
+    unique_id: mt_backup_cloud_alert
+    state: '{% set b=(state_attr(''sensor.mt_runtime'',''backups'') or {}).get(''cloud'',{}) %}{% set last=as_timestamp(b.get(''last_success''),none)
+      %}{% set age=(as_timestamp(now())-last)/3600 if last is not none else none %}{{ ''UNKNOWN'' if not b else (''CRITICAL'' if age is not none
+      and age>=48 else (''WARNING'' if age is none or age>=24 or b.get(''status'') in [''failed'',''verification_failed''] else ''OK'')) }}'
+    attributes:
+      friendly_label: cloud backup
+- sensor:
+  - name: MT Backup Request Alert
+    unique_id: mt_backup_request_alert
+    state: '{% set r=state_attr(''sensor.mt_runtime'',''backup_request'') or {} %}{{ ''WARNING'' if r.get(''status'') == ''blocked'' and as_timestamp(now())-r.get(''at'',0)<3600
+      else ''OK'' }}'
+    attributes:
+      friendly_label: Manuel backup isteği
+- sensor:
+  - name: MT Camera Policy Alert
+    unique_id: mt_camera_policy_alert
+    state: '{% set f=state_attr(''sensor.mt_runtime'',''frigate'') %}{% set en=(f.enabled if f is mapping and f.enabled is defined else none)
+      %}{% set loc=states(''device_tracker.ana_cihaz_a72'') %}{{ ''WARNING'' if loc in [''unknown'',''unavailable''] or en is none else (''OK''
+      if (loc==''home'') != (en | bool) else ''WARNING'') }}'
+    attributes:
+      friendly_label: Kamera konum kuralı
+- sensor:
+  - name: MT Active Alerts
+    unique_id: mt_active_alerts
+    state: '{% set ns=namespace(n=0) %}{% for e in [''sensor.mt_pi5_temperature_alert'', ''sensor.mt_pi5_disk_alert'', ''sensor.mt_pi5_ram_alert'',
+      ''sensor.mt_pi5_cpu_alert'', ''sensor.mt_pi5_online_alert'', ''sensor.mt_pi5_stale_alert'', ''sensor.mt_pcold_temperature_alert'', ''sensor.mt_pcold_disk_alert'',
+      ''sensor.mt_pcold_ram_alert'', ''sensor.mt_pcold_cpu_alert'', ''sensor.mt_pcold_online_alert'', ''sensor.mt_pcold_stale_alert'', ''sensor.mt_throttled_alert'',
+      ''sensor.mt_smart_alert'', ''sensor.mt_pi5_docker_alert'', ''sensor.mt_pcold_docker_alert'', ''sensor.mt_cloudflare_alert'', ''sensor.mt_tailscale_alert'',
+      ''sensor.mt_portainer_alert'', ''sensor.mt_nextcloud_alert'', ''sensor.mt_bridge_alert'', ''sensor.mt_frigate_alert'', ''sensor.mt_camera_alert'',
+      ''sensor.mt_detection_alert'', ''sensor.mt_recording_alert'', ''sensor.mt_ffmpeg_alert'', ''sensor.mt_snapshot_alert'', ''sensor.mt_container_alert'',
+      ''sensor.mt_backup_pi_alert'', ''sensor.mt_backup_pcold_alert'', ''sensor.mt_backup_cloud_alert'', ''sensor.mt_backup_request_alert'', ''sensor.mt_camera_policy_alert'']
+      %}{% if states(e) in [''WARNING'',''CRITICAL''] %}{% set ns.n=ns.n+1 %}{% endif %}{% endfor %}{{ ns.n + (state_attr(''sensor.mt_runtime'',''alerts'')
+      or [])|length }}'
+    attributes:
+      entities: '{{ [''sensor.mt_pi5_temperature_alert'', ''sensor.mt_pi5_disk_alert'', ''sensor.mt_pi5_ram_alert'', ''sensor.mt_pi5_cpu_alert'',
+        ''sensor.mt_pi5_online_alert'', ''sensor.mt_pi5_stale_alert'', ''sensor.mt_pcold_temperature_alert'', ''sensor.mt_pcold_disk_alert'',
+        ''sensor.mt_pcold_ram_alert'', ''sensor.mt_pcold_cpu_alert'', ''sensor.mt_pcold_online_alert'', ''sensor.mt_pcold_stale_alert'', ''sensor.mt_throttled_alert'',
+        ''sensor.mt_smart_alert'', ''sensor.mt_pi5_docker_alert'', ''sensor.mt_pcold_docker_alert'', ''sensor.mt_cloudflare_alert'', ''sensor.mt_tailscale_alert'',
+        ''sensor.mt_portainer_alert'', ''sensor.mt_nextcloud_alert'', ''sensor.mt_bridge_alert'', ''sensor.mt_frigate_alert'', ''sensor.mt_camera_alert'',
+        ''sensor.mt_detection_alert'', ''sensor.mt_recording_alert'', ''sensor.mt_ffmpeg_alert'', ''sensor.mt_snapshot_alert'', ''sensor.mt_container_alert'',
+        ''sensor.mt_backup_pi_alert'', ''sensor.mt_backup_pcold_alert'', ''sensor.mt_backup_cloud_alert'', ''sensor.mt_backup_request_alert'',
+        ''sensor.mt_camera_policy_alert''] }}'
+      unknown_count: '{% set ns=namespace(n=0) %}{% for e in [''sensor.mt_pi5_temperature_alert'', ''sensor.mt_pi5_disk_alert'', ''sensor.mt_pi5_ram_alert'',
+        ''sensor.mt_pi5_cpu_alert'', ''sensor.mt_pi5_online_alert'', ''sensor.mt_pi5_stale_alert'', ''sensor.mt_pcold_temperature_alert'', ''sensor.mt_pcold_disk_alert'',
+        ''sensor.mt_pcold_ram_alert'', ''sensor.mt_pcold_cpu_alert'', ''sensor.mt_pcold_online_alert'', ''sensor.mt_pcold_stale_alert'', ''sensor.mt_throttled_alert'',
+        ''sensor.mt_smart_alert'', ''sensor.mt_pi5_docker_alert'', ''sensor.mt_pcold_docker_alert'', ''sensor.mt_cloudflare_alert'', ''sensor.mt_tailscale_alert'',
+        ''sensor.mt_portainer_alert'', ''sensor.mt_nextcloud_alert'', ''sensor.mt_bridge_alert'', ''sensor.mt_frigate_alert'', ''sensor.mt_camera_alert'',
+        ''sensor.mt_detection_alert'', ''sensor.mt_recording_alert'', ''sensor.mt_ffmpeg_alert'', ''sensor.mt_snapshot_alert'', ''sensor.mt_container_alert'',
+        ''sensor.mt_backup_pi_alert'', ''sensor.mt_backup_pcold_alert'', ''sensor.mt_backup_cloud_alert'', ''sensor.mt_backup_request_alert'',
+        ''sensor.mt_camera_policy_alert''] %}{% if states(e) in [''UNKNOWN'',''unknown'',''unavailable''] %}{% set ns.n=ns.n+1 %}{% endif %}{%
+        endfor %}{{ ns.n }}'
+- triggers:
+  - trigger: event
+    event_type: metehantech_alert
+  sensor:
+  - name: MT Alert History
+    unique_id: mt_alert_history
+    state: '{{ now().isoformat() }}'
+    attributes:
+      events: '{{ ([dict(timestamp=now().isoformat(), severity=trigger.event.data.severity, source=trigger.event.data.source, message=trigger.event.data.message,
+        recovery=trigger.event.data.recovery)] + (this.attributes.events | default([])))[:20] }}'
+command_line:
+- sensor:
+    name: MT Runtime
+    unique_id: mt_runtime
+    command: cat /config/metehantech_runtime/status.json
+    scan_interval: 30
+    command_timeout: 5
+    value_template: '{{ value_json.updated }}'
+    json_attributes:
+    - errors
+    - metrics_time
+    - alerts
+    - history
+    - backups
+    - backup_active
+    - backup_request
+    - frigate
+    - security_events
+    - containers
+    - container_restarts_10m
+shell_command:
+  metehantech_backup_pi: python3 /config/metehantech_runtime/request_backup.py pi
+  metehantech_backup_pcold: python3 /config/metehantech_runtime/request_backup.py pcold

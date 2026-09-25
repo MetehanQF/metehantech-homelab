@@ -1,0 +1,11 @@
+user frigate
+topic readwrite frigate/#
+topic read homeassistant/status
+
+user homeassistant
+topic readwrite frigate/#
+topic readwrite homeassistant/#
+
+user probe
+topic read frigate/#
+topic read homeassistant/#

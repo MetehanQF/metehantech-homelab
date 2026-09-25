@@ -1,0 +1,81 @@
+# ─────────────────────────────────────────────
+# Real configuration — never committed.
+# Templates live next to these as *.example / *.example.env
+# ─────────────────────────────────────────────
+config.env
+*.env
+!*.example.env
+!*.env.example
+credentials.json
+*credentials*.json
+!*credentials.example.json
+secrets.yaml
+secrets/
+*.key
+*.pem
+id_rsa*
+id_ed25519*
+
+# Mosquitto password file (bcrypt hashes)
+mqtt/config/passwords
+
+# AdGuard Home's own generated config: runtime state holding the admin hash
+# and the client inventory.
+**/AdGuardHome.yaml
+**/AdGuardHome.yaml.*
+**/conf/
+**/work/
+
+# ─────────────────────────────────────────────
+# Home Assistant runtime — none of this belongs in a repository
+# ─────────────────────────────────────────────
+.storage/
+home-assistant_v2.db*
+home-assistant.log*
+.HA_VERSION
+.ha_run.lock
+deps/
+tts/
+www/
+blueprints/
+custom_components/
+.cloud/
+
+# ─────────────────────────────────────────────
+# Databases, logs, runtime state, backups
+# ─────────────────────────────────────────────
+*.db
+*.db-shm
+*.db-wal
+*.sqlite*
+*.log
+*.log.*
+*.lock
+data/
+log/
+backups/
+*-results.json
+matrix-results.json
+failover-results.json
+
+# Raw investigation dumps and historical snapshots
+investigation-*/
+*.backup-*
+staging/
+
+# Screenshots
+*.png
+*.jpg
+*.jpeg
+
+# ─────────────────────────────────────────────
+# Language / editor artefacts
+# ─────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+node_modules/
+.DS_Store
+*.swp
+*~

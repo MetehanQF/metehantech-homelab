@@ -1,0 +1,231 @@
+# MetehanTech Dark - tablet-first dark theme for the MetehanTech Home dashboard.
+#
+# The theme NAME must stay exactly "MetehanTech Dark": every view in
+# dashboards/metehantech-home.yaml selects it by that name.
+#
+# Scope: only the five MetehanTech Home views declare `theme: MetehanTech Dark`.
+# dashboards/metehantech-systems.yaml declares no theme and the user profile
+# theme is not set to this one, so desktop/phone browsing of every other
+# dashboard keeps the stock Home Assistant look.
+#
+# card-mod (HACS, thomasloven/lovelace-card-mod) supplies the glass surface.
+# Without card-mod loaded the `card-mod-*` keys are inert and the dashboard
+# falls back to the plain colours below - it degrades, it does not break.
+#
+# 2026-09-20 recolour: deep gradient purple. Layout, sizing and every card
+# stayed exactly as they were; only the colour layer changed. Status meanings
+# are deliberately NOT purple - teal stays online/ok, amber stays warning and
+# light-on, red stays error.
+MetehanTech Dark:
+  # ---------------------------------------------------------------- palette --
+  # Five stops of one purple ramp, never a single flat mauve.
+  mtt-ink: '#0D0914'          # darkest background
+  mtt-night: '#191024'        # dark purple
+  mtt-plum: '#2B1640'         # mürdüm
+  mtt-grape: '#5B2A86'        # mid purple
+  mtt-violet: '#8B5CF6'       # live accent
+  mtt-indigo: '#6366F1'       # slight blue-purple, used sparingly
+  mtt-lilac: '#B794FF'        # light purple for text/icon contrast
+  mtt-surface: 'rgba(35, 22, 54, 0.66)'
+  mtt-hairline: 'rgba(139, 92, 246, 0.16)'
+  mtt-hairline-strong: 'rgba(139, 92, 246, 0.30)'
+  # Status colours - kept out of the purple ramp on purpose.
+  mtt-teal: '#2DD4BF'
+  mtt-amber: '#FBBF24'
+  mtt-red: '#F87171'
+
+  # ------------------------------------------------------------ core colors --
+  primary-color: '#8B5CF6'
+  light-primary-color: '#B794FF'
+  dark-primary-color: '#5B2A86'
+  accent-color: '#8B5CF6'
+
+  primary-background-color: '#0D0914'
+  secondary-background-color: '#191024'
+  card-background-color: 'rgba(35, 22, 54, 0.66)'
+  ha-card-background: 'rgba(35, 22, 54, 0.66)'
+  popup-background-color: '#150E20'
+
+  primary-text-color: '#EDE9F6'
+  secondary-text-color: '#A79BC0'
+  text-primary-color: '#0D0914'
+  disabled-text-color: '#6E6188'
+  divider-color: 'rgba(139, 92, 246, 0.16)'
+  outline-color: 'rgba(139, 92, 246, 0.20)'
+
+  # Page background: the requested soft four-stop ramp, plus one very light
+  # static radial for depth. Nothing animates.
+  lovelace-background: >-
+    radial-gradient(circle at top left, rgba(139, 92, 246, 0.16) 0%, rgba(139, 92, 246, 0) 45%),
+    radial-gradient(circle at 92% 6%, rgba(99, 102, 241, 0.10) 0%, rgba(99, 102, 241, 0) 40%),
+    linear-gradient(135deg, #0D0914 0%, #191024 35%, #2B1640 70%, #14101F 100%)
+
+  # ------------------------------------------------------------ card shape --
+  ha-card-border-radius: 26px
+  ha-card-border-width: 1px
+  ha-card-border-color: 'rgba(139, 92, 246, 0.16)'
+  ha-card-box-shadow: '0 14px 38px -18px rgba(8, 5, 14, 0.95)'
+  ha-section-background-color: transparent
+  ha-view-sections-column-gap: 20px
+  ha-view-sections-row-gap: 20px
+  ha-view-sections-column-max-width: 520px
+  masonry-view-card-margin: 10px
+
+  # ------------------------------------------------------------- app chrome --
+  app-header-background-color: 'rgba(25, 16, 36, 0.86)'
+  app-header-text-color: '#EDE9F6'
+  app-header-edit-background-color: '#2B1640'
+  sidebar-background-color: '#140D1F'
+  sidebar-icon-color: '#9587B4'
+  sidebar-text-color: '#DCD5EC'
+  sidebar-selected-icon-color: '#B794FF'
+  sidebar-selected-text-color: '#F3EEFF'
+
+  # ------------------------------------------------------------- semantics --
+  # Accent-driven icons go purple; state meanings stay where they were.
+  state-icon-color: '#A79BC0'
+  state-icon-active-color: '#B794FF'
+  state-light-active-color: '#FBBF24'
+  state-switch-active-color: '#8B5CF6'
+  state-binary_sensor-active-color: '#FBBF24'
+  state-person-home-color: '#2DD4BF'
+  state-person-not_home-color: '#FBBF24'
+  state-automation-active-color: '#2DD4BF'
+  paper-item-icon-color: '#A79BC0'
+  paper-item-icon-active-color: '#B794FF'
+  label-badge-background-color: '#1D1430'
+  label-badge-text-color: '#EDE9F6'
+  input-fill-color: 'rgba(139, 92, 246, 0.10)'
+  input-ink-color: '#EDE9F6'
+  input-label-ink-color: '#A79BC0'
+  input-idle-line-color: 'rgba(139, 92, 246, 0.26)'
+  slider-color: '#8B5CF6'
+  slider-secondary-color: 'rgba(139, 92, 246, 0.30)'
+  slider-track-color: 'rgba(139, 92, 246, 0.18)'
+  switch-checked-color: '#8B5CF6'
+  success-color: '#2DD4BF'
+  warning-color: '#FBBF24'
+  error-color: '#F87171'
+  info-color: '#6366F1'
+
+  # Named colours used by mushroom `icon_color:`. The purple family is retuned
+  # to this ramp and "blue" is pulled to the allowed blue-purple; teal, amber,
+  # green and red keep their status meaning untouched.
+  rgb-primary-color: 139, 92, 246
+  rgb-purple: 139, 92, 246
+  rgb-deep-purple: 91, 42, 134
+  rgb-indigo: 99, 102, 241
+  rgb-blue: 99, 102, 241
+  rgb-light-blue: 129, 140, 248
+  rgb-teal: 45, 212, 191
+  rgb-cyan: 34, 211, 238
+  rgb-green: 52, 211, 153
+  rgb-amber: 251, 191, 36
+  rgb-yellow: 250, 204, 21
+  rgb-orange: 251, 146, 60
+  rgb-red: 248, 113, 113
+  rgb-pink: 216, 130, 236
+  rgb-grey: 167, 155, 192
+  rgb-disabled: 110, 97, 136
+  rgb-state-light-color: 251, 191, 36
+
+  # -------------------------------------------------------------- mushroom --
+  # Touch-first sizing for the 12.4" tablet in landscape - unchanged by the
+  # recolour, these are layout values.
+  mush-spacing: 14px
+  mush-icon-size: 46px
+  mush-icon-border-radius: 16px
+  mush-icon-symbol-size: 22px
+  mush-badge-size: 17px
+  mush-badge-icon-size: 12px
+  mush-badge-border-radius: 9px
+  mush-control-height: 48px
+  mush-control-border-radius: 16px
+  mush-control-spacing: 10px
+  mush-control-icon-size: 22px
+  mush-slider-threshold: 0.03
+  mush-card-primary-font-size: 15.5px
+  mush-card-primary-font-weight: 600
+  mush-card-primary-line-height: 1.25
+  mush-card-primary-letter-spacing: '0.1px'
+  mush-card-secondary-font-size: 13px
+  mush-card-secondary-font-weight: 500
+  mush-card-secondary-line-height: 1.3
+  mush-card-secondary-color: '#A79BC0'
+  mush-chip-height: 44px
+  mush-chip-border-radius: 22px
+  mush-chip-border-width: 1px
+  mush-chip-border-color: 'rgba(139, 92, 246, 0.20)'
+  mush-chip-background: 'rgba(35, 22, 54, 0.62)'
+  mush-chip-box-shadow: '0 8px 22px -14px rgba(8, 5, 14, 0.90)'
+  mush-chip-font-size: 13.5px
+  mush-chip-font-weight: 600
+  mush-chip-icon-size: 20px
+  mush-chip-padding: 0 12px
+  mush-chip-spacing: 9px
+  mush-title-font-size: 19px
+  mush-title-font-weight: 650
+  mush-title-line-height: 1.2
+  mush-title-letter-spacing: '0.2px'
+  mush-title-color: '#EDE9F6'
+  mush-title-padding: 6px 6px 0 6px
+  mush-title-spacing: 3px
+  mush-subtitle-font-size: 13px
+  mush-subtitle-font-weight: 500
+  mush-subtitle-color: '#9A8DB8'
+  mush-rgb-purple: 139, 92, 246
+  mush-rgb-deep-purple: 91, 42, 134
+  mush-rgb-indigo: 99, 102, 241
+  mush-rgb-blue: 99, 102, 241
+  mush-rgb-teal: 45, 212, 191
+  mush-rgb-cyan: 34, 211, 238
+  mush-rgb-green: 52, 211, 153
+  mush-rgb-amber: 251, 191, 36
+  mush-rgb-red: 248, 113, 113
+  mush-rgb-grey: 167, 155, 192
+  mush-rgb-disabled: 110, 97, 136
+  mush-rgb-success: 45, 212, 191
+  mush-rgb-warning: 251, 191, 36
+  mush-rgb-danger: 248, 113, 113
+  mush-rgb-info: 99, 102, 241
+  mush-rgb-state-light: 251, 191, 36
+  mush-rgb-state-person-home: 45, 212, 191
+  mush-rgb-state-person-not-home: 251, 191, 36
+
+  # -------------------------------------------------------------- card-mod --
+  # Card surface deliberately does NOT reuse the page gradient: it is a set of
+  # slightly different, darker translucent purples, so the dashboard never
+  # reads as one flat block. One very light radial at the top-left adds depth;
+  # the purple border and glow stay far below neon.
+  # Press feedback is NOT declared here on purpose: `ha-card:active` would also
+  # fire while dragging a brightness slider. Tappable cards opt in individually
+  # in dashboards/metehantech-home.yaml.
+  card-mod-theme: MetehanTech Dark
+  card-mod-card: |
+    ha-card {
+      border-radius: var(--ha-card-border-radius, 26px);
+      border: 1px solid var(--mtt-hairline);
+      background:
+        radial-gradient(circle at top left,
+          rgba(139, 92, 246, 0.15) 0%,
+          rgba(139, 92, 246, 0) 48%),
+        linear-gradient(158deg,
+          rgba(52, 33, 79, 0.70) 0%,
+          rgba(31, 20, 47, 0.66) 56%,
+          rgba(21, 14, 32, 0.74) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      box-shadow:
+        0 14px 38px -18px rgba(8, 5, 14, 0.95),
+        0 0 22px -14px rgba(139, 92, 246, 0.35),
+        inset 0 1px 0 rgba(183, 148, 255, 0.07);
+      transition:
+        background 300ms cubic-bezier(0.22, 0.7, 0.2, 1),
+        border-color 300ms cubic-bezier(0.22, 0.7, 0.2, 1),
+        box-shadow 300ms cubic-bezier(0.22, 0.7, 0.2, 1),
+        transform 170ms cubic-bezier(0.22, 0.7, 0.2, 1);
+    }
+
+  modes:
+    dark: {}
+    light: {}

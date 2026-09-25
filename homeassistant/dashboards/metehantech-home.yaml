@@ -1,0 +1,2530 @@
+# metehantech-kiosk-nav
+title: MetehanTech Home
+kiosk_mode:
+  kiosk: "[[[\n  const ua = String(user_agent || navigator.userAgent || '');\n  const isFully = typeof window.fully !== 'undefined' || /Fully/i.test(ua);\n\
+    \  const onThisDashboard = window.location.pathname.startsWith('/metehantech-home/');\n  return onThisDashboard && isFully;\n]]]"
+views:
+- title: Home
+  path: home
+  icon: mdi:home-variant
+  type: sections
+  max_columns: 3
+  dense_section_placement: false
+  theme: MetehanTech Dark
+  sections:
+  - type: grid
+    column_span: 3
+    cards:
+    - type: horizontal-stack
+      cards:
+      - type: custom:mushroom-template-card
+        icon: mdi:home-variant
+        primary: Ana
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/home
+        card_mod:
+          style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.34) 0%,\n      rgba(99, 102, 241, 0.18) 100%)\
+            \ !important;\n  border-color: rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 16px 38px -18px rgba(139, 92, 246, 0.70),\n\
+            \    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;\n  --card-primary-color: #FFFFFF;\n}\nmushroom-shape-icon {\n  --icon-color:\
+            \ #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.40) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:lightbulb-group
+        primary: Işıklar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/lights
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:palette-swatch-variant
+        primary: Modlar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/modes
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:shield-home
+        primary: Güvenlik
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/security
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:server
+        primary: Sistem
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/systems
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        primary: Otomasyon
+        icon: mdi:robot
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/automations
+        card_mod:
+          style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+            border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+  - type: grid
+    cards:
+    - type: custom:mushroom-template-card
+      entity: input_select.metehantech_mode
+      primary: Ev · {{ states('input_select.metehantech_mode') }}
+      secondary: '{{ ''Otomasyonlar duraklatıldı · kritik korumalar aktif'' if is_state(''input_boolean.metehantech_pause'',''on'') else (''Metrik
+        bekleniyor'' if state_attr(''sensor.mt_active_alerts'',''unknown_count'')|int(0)>0 and is_state(''sensor.mt_active_alerts'',''0'') else
+        (''✓ Sistem normal'' if is_state(''sensor.mt_active_alerts'',''0'') else states(''sensor.mt_active_alerts'') ~ '' aktif uyarı'')) }}'
+      icon: mdi:home-switch
+      icon_color: '{{ ''red'' if states(''sensor.mt_active_alerts'')|int(0)>0 else ''purple'' }}'
+      tap_action:
+        action: more-info
+      card_mod: &id001
+        style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+          border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+    - type: conditional
+      conditions:
+      - entity: sensor.mt_active_alerts
+        state_not: '0'
+      - entity: sensor.mt_active_alerts
+        state_not: unavailable
+      - entity: sensor.mt_active_alerts
+        state_not: unknown
+      card:
+        type: markdown
+        title: Aktif Uyarılar
+        content: '{% set ids=state_attr(''sensor.mt_active_alerts'',''entities'') or [] %}
+
+          {% for e in ids %}{% if states(e) in [''WARNING'',''CRITICAL''] %}
+
+          {{ ''🔴'' if states(e)==''CRITICAL'' else ''⚠'' }} {{ state_attr(e,''friendly_label'') }}
+
+          {% endif %}{% endfor %}
+
+          {% for a in (state_attr(''sensor.mt_runtime'',''alerts'') or [])[:5] %}
+
+          {{ ''🔴'' if a.severity==''critical'' else ''⚠'' }} {{ a.title }}
+
+          {% endfor %}'
+        card_mod: *id001
+    - type: custom:mushroom-template-card
+      icon: '{%- set c = states(''weather.forecast_home'') -%}{{- {''clear-night'': ''mdi:weather-night'', ''cloudy'': ''mdi:weather-cloudy'',
+        ''fog'': ''mdi:weather-fog'', ''hail'': ''mdi:weather-hail'', ''lightning'': ''mdi:weather-lightning'', ''lightning-rainy'': ''mdi:weather-lightning-rainy'',
+        ''partlycloudy'': ''mdi:weather-partly-cloudy'', ''pouring'': ''mdi:weather-pouring'', ''rainy'': ''mdi:weather-rainy'', ''snowy'': ''mdi:weather-snowy'',
+        ''snowy-rainy'': ''mdi:weather-snowy-rainy'', ''sunny'': ''mdi:weather-sunny'', ''windy'': ''mdi:weather-windy'', ''windy-variant'': ''mdi:weather-windy-variant''}.get(c,
+        ''mdi:weather-cloudy'') -}}'
+      primary: '{{ now().strftime(''%H:%M'') }}'
+      secondary: '{{ now().strftime(''%d.%m.%Y'') }} · {{ [''Pazartesi'', ''Salı'', ''Çarşamba'', ''Perşembe'', ''Cuma'', ''Cumartesi'', ''Pazar''][now().weekday()]
+        }}'
+      tap_action:
+        action: none
+      card_mod:
+        style: "ha-card {\n  --mush-card-primary-font-size: 46px;\n  --mush-card-primary-font-weight: 300;\n  --mush-card-primary-line-height:\
+          \ 1.04;\n  --mush-card-primary-letter-spacing: -1.4px;\n  --mush-card-secondary-font-size: 14px;\n  --card-primary-color: #F6F4FF;\n\
+          \  --mush-icon-size: 54px;\n  padding: 6px 4px;\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.22) 0%,\n  \
+          \    rgba(91, 42, 134, 0.14) 48%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.28) !important;\n\
+          }\nmushroom-shape-icon {\n  --icon-color: rgb(183, 148, 255) !important;\n  --shape-color: rgba(139, 92, 246, 0.20) !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: weather.forecast_home
+      icon: '{%- set c = states(''weather.forecast_home'') -%}{{- {''clear-night'': ''mdi:weather-night'', ''cloudy'': ''mdi:weather-cloudy'',
+        ''fog'': ''mdi:weather-fog'', ''hail'': ''mdi:weather-hail'', ''lightning'': ''mdi:weather-lightning'', ''lightning-rainy'': ''mdi:weather-lightning-rainy'',
+        ''partlycloudy'': ''mdi:weather-partly-cloudy'', ''pouring'': ''mdi:weather-pouring'', ''rainy'': ''mdi:weather-rainy'', ''snowy'': ''mdi:weather-snowy'',
+        ''snowy-rainy'': ''mdi:weather-snowy-rainy'', ''sunny'': ''mdi:weather-sunny'', ''windy'': ''mdi:weather-windy'', ''windy-variant'': ''mdi:weather-windy-variant''}.get(c,
+        ''mdi:weather-cloudy'') -}}'
+      icon_color: blue
+      primary: Hava
+      secondary: '{{ state_attr(''weather.forecast_home'', ''temperature'') | round(1) }} °C · {% set c = states(''weather.forecast_home'') %}{{
+        {''clear-night'': ''Açık, gece'', ''cloudy'': ''Bulutlu'', ''fog'': ''Puslu'', ''hail'': ''Dolu'', ''lightning'': ''Gök gürültülü'', ''lightning-rainy'':
+        ''Gök gürültülü sağanak'', ''partlycloudy'': ''Parçalı bulutlu'', ''pouring'': ''Şiddetli yağış'', ''rainy'': ''Yağmurlu'', ''snowy'':
+        ''Karlı'', ''snowy-rainy'': ''Karla karışık yağmur'', ''sunny'': ''Güneşli'', ''windy'': ''Rüzgârlı'', ''windy-variant'': ''Rüzgârlı'',
+        ''exceptional'': ''Olağan dışı''}.get(c, c) }}'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      entity: person.metehan
+      icon: '{{ ''mdi:home-account'' if is_state(''person.metehan'', ''home'') else ''mdi:home-export-outline'' }}'
+      icon_color: '{{ ''teal'' if is_state(''person.metehan'', ''home'') else ''amber'' }}'
+      primary: Metehan
+      secondary: '{{ ''Evde'' if is_state(''person.metehan'', ''home'') else ''Dışarıda'' if is_state(''person.metehan'', ''not_home'') else states(''person.metehan'')
+        }}'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: weather.forecast_home
+        icon: mdi:water-percent
+        icon_color: blue
+        content: '{{ state_attr(''weather.forecast_home'', ''humidity'') | int(0) }}%'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: weather.forecast_home
+        icon: mdi:weather-windy
+        icon_color: teal
+        content: '{{ state_attr(''weather.forecast_home'', ''wind_speed'') | round(0) }} km/s'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: weather.forecast_home
+        icon: mdi:white-balance-sunny
+        icon_color: amber
+        content: UV {{ state_attr('weather.forecast_home', 'uv_index') | round(1) }}
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: weather-forecast
+      entity: weather.forecast_home
+      forecast_type: daily
+      show_forecast: true
+      show_current: false
+      card_mod:
+        style: "ha-card {\n  padding: 4px 10px 10px 10px;\n  overflow: hidden;\n}\nha-card .content {\n  padding-top: 4px;\n}\n"
+      grid_options:
+        columns: 12
+    - type: conditional
+      conditions:
+      - condition: or
+        conditions:
+        - condition: state
+          entity: weather.forecast_home
+          state: exceptional
+        - condition: state
+          entity: weather.forecast_home
+          state: hail
+        - condition: state
+          entity: weather.forecast_home
+          state: lightning-rainy
+        - condition: state
+          entity: weather.forecast_home
+          state: pouring
+      card:
+        type: entities
+        title: Hava uyarısı
+        show_header_toggle: false
+        entities:
+        - weather.forecast_home
+        card_mod: *id001
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Ev kontrolü
+      subtitle: '{%- set n = [''light.odam_lamba'', ''light.oda_2'', ''light.oda_3'', ''light.oda_4''] | select(''is_state'', ''on'') | list |
+        count -%}{{ n }}/4 ampul açık · masa {{ ''açık'' if is_state(''light.masa_ambiyans'', ''on'') else ''kapalı'' }}'
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.tum_isiklar
+      name: Dört ampul
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: false
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.tum_isiklar') -%}\n{%- set c = state_attr('light.tum_isiklar', 'rgb_color') or [251, 191, 36] -%}\n\
+          {%- set b = (state_attr('light.tum_isiklar', 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n   \
+          \ linear-gradient(152deg,\n      rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31, 20,\
+          \ 47, 0.66) 60%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20\
+          \ + 0.20 * b) | round(3) }}) !important;\n  box-shadow:\n    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30\
+          \ * b) | round(3) }}),\n    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:lightbulb-group
+      primary: Aç
+      secondary: Dört ampul
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:lightbulb-group-off
+      primary: Kapat
+      secondary: Dört ampul
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_off
+        target:
+          entity_id: light.tum_isiklar
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:home
+      primary: Ev
+      secondary: '%70 sıcak beyaz'
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_home
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'home' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(139, 92, 246, 0.30) 0%,\n      rgba(139, 92, 246, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(139, 92, 246, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(139, 92, 246, 0.80) !important;\n  --shape-color: rgba(139, 92, 246, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:weather-night
+      primary: Gece
+      secondary: Sadece masa %10
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_night
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'night' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(99, 102, 241, 0.30) 0%,\n      rgba(99, 102, 241, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(99, 102, 241, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(99, 102, 241, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(99, 102, 241, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(99, 102, 241, 0.80) !important;\n  --shape-color: rgba(99, 102, 241, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:movie-open
+      primary: Film
+      secondary: Masa %10 mor
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_movie
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'movie' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(91, 42, 134, 0.30) 0%,\n      rgba(91, 42, 134, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(91, 42, 134, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(91, 42, 134, 0.60),\n    inset 0 1px 0 rgba(255, 255,\
+          \ 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(91, 42, 134, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon {\n\
+          \  --icon-color: rgba(91, 42, 134, 0.80) !important;\n  --shape-color: rgba(91, 42, 134, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:lightbulb-group-off
+      primary: Tümü Kapat
+      secondary: Masa dahil 5 ışık
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_all_lights_off
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'off' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(183, 148, 255, 0.30) 0%,\n      rgba(183, 148, 255, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(183, 148, 255, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(183, 148, 255, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(183, 148, 255, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(183, 148, 255, 0.80) !important;\n  --shape-color: rgba(183, 148, 255, 0.13) !important;\n}\n{% endif %}\n\
+          ha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Kısa durum
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.pi5_online
+      icon: mdi:raspberry-pi
+      icon_color: '{%- set s = states(''binary_sensor.pi5_online'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else ''teal''
+        if s == ''on'' else ''red'' }}'
+      primary: MetehanTech Pi5
+      secondary: '{{ ''Online'' if is_state(''binary_sensor.pi5_online'', ''on'') else ''Offline'' }} · {{ states(''sensor.pi5_temperature'')
+        }} °C · CPU {{ states(''sensor.pi5_cpu'') }}%'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: sensor.pi5_temperature
+        icon: mdi:thermometer
+        icon_color: '{%- set v = states(''sensor.pi5_temperature'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 75 else ''amber''
+          if v >= 60 else ''teal'' }}'
+        content: '{{ states(''sensor.pi5_temperature'') }}°'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pi5_cpu
+        icon: mdi:cpu-64-bit
+        icon_color: '{%- set v = states(''sensor.pi5_cpu'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 90 else ''amber'' if
+          v >= 70 else ''teal'' }}'
+        content: '{{ states(''sensor.pi5_cpu'') }}%'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.pcold_online
+      icon: mdi:desktop-tower
+      icon_color: '{%- set s = states(''binary_sensor.pcold_online'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+        ''teal'' if s == ''on'' else ''red'' }}'
+      primary: MetehanTech PcOld
+      secondary: '{{ ''Online'' if is_state(''binary_sensor.pcold_online'', ''on'') else ''Offline'' }} · {{ states(''sensor.pcold_temperature'')
+        }} °C · CPU {{ states(''sensor.pcold_cpu'') }}%'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: sensor.pcold_temperature
+        icon: mdi:thermometer
+        icon_color: '{%- set v = states(''sensor.pcold_temperature'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 75 else ''amber''
+          if v >= 60 else ''teal'' }}'
+        content: '{{ states(''sensor.pcold_temperature'') }}°'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pcold_cpu
+        icon: mdi:cpu-64-bit
+        icon_color: '{%- set v = states(''sensor.pcold_cpu'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 90 else ''amber'' if
+          v >= 70 else ''teal'' }}'
+        content: '{{ states(''sensor.pcold_cpu'') }}%'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Kamera ve güvenlik
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.tapo_c211_person_occupancy
+      icon: '{{ ''mdi:account-alert'' if is_state(''binary_sensor.tapo_c211_person_occupancy'', ''on'') else ''mdi:account-off-outline'' }}'
+      icon_color: '{%- set s = states(''binary_sensor.tapo_c211_person_occupancy'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'',
+        ''none''] else ''amber'' if s == ''on'' else ''teal'' }}'
+      primary: Kişi algılandı
+      secondary: '{{ ''Şu anda kişi var'' if is_state(''binary_sensor.tapo_c211_person_occupancy'', ''on'') else ''Temiz'' }}'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: binary_sensor.tapo_c211_motion
+        icon: mdi:motion-sensor
+        icon_color: '{%- set s = states(''binary_sensor.tapo_c211_motion'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none'']
+          else ''amber'' if s == ''on'' else ''teal'' }}'
+        content: '{{ ''Hareket'' if is_state(''binary_sensor.tapo_c211_motion'', ''on'') else ''Sakin'' }}'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.frigate_status
+        icon: mdi:cctv
+        icon_color: '{{ ''teal'' if states(''sensor.frigate_status'') == ''running'' else ''red'' }}'
+        content: '{{ states(''sensor.frigate_status'') }}'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: automation.metehantech_tapo_android_person_push
+        icon: mdi:cellphone-message
+        icon_color: '{%- set s = states(''automation.metehantech_tapo_android_person_push'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'',
+          ''none''] else ''teal'' if s == ''on'' else ''amber'' }}'
+        content: '{{ ''Push açık'' if is_state(''automation.metehantech_tapo_android_person_push'', ''on'') else ''Push kapalı'' }}'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: markdown
+      content: Telefon bildirimi yalnızca **evde değilken** çalışır.
+      card_mod:
+        style: "ha-card {\n  background: rgba(139, 92, 246, 0.06) !important;\n  border-color: rgba(139, 92, 246, 0.13) !important;\n  box-shadow:\
+          \ none !important;\n  padding: 2px 14px;\n}\nha-card ha-markdown {\n  font-size: 12.5px;\n  line-height: 1.45;\n  color: #9A8DB8;\n\
+          }\n"
+      grid_options:
+        columns: 12
+- title: Lights
+  path: lights
+  icon: mdi:lightbulb-group
+  type: sections
+  max_columns: 3
+  dense_section_placement: false
+  theme: MetehanTech Dark
+  sections:
+  - type: grid
+    column_span: 3
+    cards:
+    - type: horizontal-stack
+      cards:
+      - type: custom:mushroom-template-card
+        icon: mdi:home-variant
+        primary: Ana
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/home
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:lightbulb-group
+        primary: Işıklar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/lights
+        card_mod:
+          style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.34) 0%,\n      rgba(99, 102, 241, 0.18) 100%)\
+            \ !important;\n  border-color: rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 16px 38px -18px rgba(139, 92, 246, 0.70),\n\
+            \    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;\n  --card-primary-color: #FFFFFF;\n}\nmushroom-shape-icon {\n  --icon-color:\
+            \ #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.40) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:palette-swatch-variant
+        primary: Modlar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/modes
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:shield-home
+        primary: Güvenlik
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/security
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:server
+        primary: Sistem
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/systems
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        primary: Otomasyon
+        icon: mdi:robot
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/automations
+        card_mod:
+          style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+            border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Dört ampul
+      subtitle: Ortak kontrol · 2500–6500 K
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.tum_isiklar
+      name: Tüm ampuller
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.tum_isiklar') -%}\n{%- set c = state_attr('light.tum_isiklar', 'rgb_color') or [251, 191, 36] -%}\n\
+          {%- set b = (state_attr('light.tum_isiklar', 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n   \
+          \ linear-gradient(152deg,\n      rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31, 20,\
+          \ 47, 0.66) 60%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20\
+          \ + 0.20 * b) | round(3) }}) !important;\n  box-shadow:\n    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30\
+          \ * b) | round(3) }}),\n    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:lightbulb-on
+      primary: Aç
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:lightbulb-off
+      primary: Kapat
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_off
+        target:
+          entity_id: light.tum_isiklar
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:brightness-2
+      primary: '%10'
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          brightness_pct: 10
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.06) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.16) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.22),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 3
+    - type: custom:mushroom-template-card
+      icon: mdi:brightness-4
+      primary: '%30'
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          brightness_pct: 30
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.1) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.22) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.3),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 3
+    - type: custom:mushroom-template-card
+      icon: mdi:brightness-6
+      primary: '%50'
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          brightness_pct: 50
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.15) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.28) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.4),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 3
+    - type: custom:mushroom-template-card
+      icon: mdi:brightness-7
+      primary: '%100'
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          brightness_pct: 100
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.22) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.38) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.55),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 3
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Presetler
+      subtitle: Dört ampule uygulanır · masa RGB bağımsız
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:weather-sunset
+      primary: Sıcak beyaz
+      secondary: 2700 K
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          color_temp_kelvin: 2700
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(255, 214, 170, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(255, 214, 170, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(255, 214, 170, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(255, 214, 170) !important;\n  --shape-color: rgba(255, 214, 170, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:snowflake
+      primary: Soğuk beyaz
+      secondary: 6500 K
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          color_temp_kelvin: 6500
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(191, 219, 254, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(191, 219, 254, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(191, 219, 254, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(191, 219, 254) !important;\n  --shape-color: rgba(191, 219, 254, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:circle
+      primary: Kırmızı
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          hs_color:
+          - 0
+          - 100
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(248, 81, 81, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(248, 81, 81, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(248, 81, 81, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(248, 81, 81) !important;\n  --shape-color: rgba(248, 81, 81, 0.22) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 4
+    - type: custom:mushroom-template-card
+      icon: mdi:circle
+      primary: Yeşil
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          hs_color:
+          - 120
+          - 100
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(52, 211, 153, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(52, 211, 153, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(52, 211, 153, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(52, 211, 153) !important;\n  --shape-color: rgba(52, 211, 153, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 4
+    - type: custom:mushroom-template-card
+      icon: mdi:circle
+      primary: Mavi
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          hs_color:
+          - 240
+          - 100
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(99, 132, 255, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(99, 132, 255, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(99, 132, 255, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(99, 132, 255) !important;\n  --shape-color: rgba(99, 132, 255, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 4
+    - type: custom:mushroom-template-card
+      icon: mdi:circle
+      primary: Mor
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          hs_color:
+          - 275
+          - 100
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:circle
+      primary: Sarı
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.tum_isiklar
+        data:
+          hs_color:
+          - 55
+          - 100
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(250, 221, 87, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(250, 221, 87, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(250, 221, 87, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(250, 221, 87) !important;\n  --shape-color: rgba(250, 221, 87, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Tek tek ampuller
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.odam_lamba
+      name: Odam lamba
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: false
+      show_color_control: false
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.odam_lamba') -%}\n{%- set c = state_attr('light.odam_lamba', 'rgb_color') or [251, 191, 36] -%}\n{%-\
+          \ set b = (state_attr('light.odam_lamba', 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31, 20, 47, 0.66) 60%,\n      rgba(21,\
+          \ 14, 32, 0.74) 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20 + 0.20 * b) | round(3) }}) !important;\n\
+          \  box-shadow:\n    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30 * b) | round(3) }}),\n    inset 0 1px\
+          \ 0 rgba(255, 255, 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.oda_2
+      name: Oda 2
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: false
+      show_color_control: false
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.oda_2') -%}\n{%- set c = state_attr('light.oda_2', 'rgb_color') or [251, 191, 36] -%}\n{%- set b = (state_attr('light.oda_2',\
+          \ 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n      rgba({{ c[0]\
+          \ }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31, 20, 47, 0.66) 60%,\n      rgba(21, 14, 32, 0.74)\
+          \ 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20 + 0.20 * b) | round(3) }}) !important;\n  box-shadow:\n\
+          \    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30 * b) | round(3) }}),\n    inset 0 1px 0 rgba(255, 255,\
+          \ 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.oda_3
+      name: Oda 3
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: false
+      show_color_control: false
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.oda_3') -%}\n{%- set c = state_attr('light.oda_3', 'rgb_color') or [251, 191, 36] -%}\n{%- set b = (state_attr('light.oda_3',\
+          \ 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n      rgba({{ c[0]\
+          \ }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31, 20, 47, 0.66) 60%,\n      rgba(21, 14, 32, 0.74)\
+          \ 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20 + 0.20 * b) | round(3) }}) !important;\n  box-shadow:\n\
+          \    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30 * b) | round(3) }}),\n    inset 0 1px 0 rgba(255, 255,\
+          \ 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.oda_4
+      name: Oda 4
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: false
+      show_color_control: false
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.oda_4') -%}\n{%- set c = state_attr('light.oda_4', 'rgb_color') or [251, 191, 36] -%}\n{%- set b = (state_attr('light.oda_4',\
+          \ 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n      rgba({{ c[0]\
+          \ }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31, 20, 47, 0.66) 60%,\n      rgba(21, 14, 32, 0.74)\
+          \ 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20 + 0.20 * b) | round(3) }}) !important;\n  box-shadow:\n\
+          \    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30 * b) | round(3) }}),\n    inset 0 1px 0 rgba(255, 255,\
+          \ 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Masa RGB
+      subtitle: L920-5 · 2500–9000 K
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-light-card
+      entity: light.masa_ambiyans
+      name: Masa ambiyans
+      icon: mdi:lightbulb
+      use_light_color: true
+      show_brightness_control: true
+      show_color_temp_control: true
+      show_color_control: true
+      collapsible_controls: false
+      tap_action:
+        action: more-info
+      hold_action:
+        action: more-info
+      double_tap_action:
+        action: toggle
+      card_mod:
+        style: "{%- set s = states('light.masa_ambiyans') -%}\n{%- set c = state_attr('light.masa_ambiyans', 'rgb_color') or [251, 191, 36] -%}\n\
+          {%- set b = (state_attr('light.masa_ambiyans', 'brightness') | float(0)) / 255 -%}\n{% if s == 'on' %}\nha-card {\n  background:\n \
+          \   linear-gradient(152deg,\n      rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.10 + 0.17 * b) | round(3) }}) 0%,\n      rgba(31,\
+          \ 20, 47, 0.66) 60%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.20\
+          \ + 0.20 * b) | round(3) }}) !important;\n  box-shadow:\n    0 16px 42px -20px rgba({{ c[0] }}, {{ c[1] }}, {{ c[2] }}, {{ (0.28 + 0.30\
+          \ * b) | round(3) }}),\n    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;\n}\n{% endif %}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:palette
+      primary: Mor
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.masa_ambiyans
+        data:
+          hs_color:
+          - 275
+          - 100
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(139, 92, 246, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(139, 92, 246, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(139, 92, 246) !important;\n  --shape-color: rgba(139, 92, 246, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:weather-sunset
+      primary: Sıcak beyaz
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.masa_ambiyans
+        data:
+          color_temp_kelvin: 2700
+          effect: 'Off'
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(255, 214, 170, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(255, 214, 170, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(255, 214, 170, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(255, 214, 170) !important;\n  --shape-color: rgba(255, 214, 170, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:aurora
+      primary: Aurora
+      secondary: Efekt
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.masa_ambiyans
+        data:
+          effect: Aurora
+      card_mod:
+        style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(99, 102, 241, 0.17) 0%,\n      rgba(31, 20, 47, 0.66) 62%,\n\
+          \      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color: rgba(99, 102, 241, 0.34) !important;\n  box-shadow:\n    0 14px 36px\
+          \ -20px rgba(99, 102, 241, 0.5),\n    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;\n}\nmushroom-shape-icon {\n  --icon-color:\
+          \ rgb(99, 102, 241) !important;\n  --shape-color: rgba(99, 102, 241, 0.22) !important;\n}\nha-card:active { transform: scale(0.962);\
+          \ }\n"
+      grid_options:
+        columns: 6
+    - type: custom:mushroom-template-card
+      icon: mdi:palette-outline
+      primary: Efekt kapalı
+      secondary: Düz renk
+      tap_action:
+        action: perform-action
+        perform_action: light.turn_on
+        target:
+          entity_id: light.masa_ambiyans
+        data:
+          effect: 'Off'
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 6
+    - type: light
+      entity: light.masa_ambiyans
+      name: Renk çemberi ve tüm efektler
+      card_mod:
+        style: "ha-card {\n  padding-bottom: 6px;\n}\n"
+      grid_options:
+        columns: 12
+- title: Modes
+  path: modes
+  icon: mdi:palette-swatch-variant
+  type: sections
+  max_columns: 3
+  dense_section_placement: false
+  theme: MetehanTech Dark
+  sections:
+  - type: grid
+    column_span: 3
+    cards:
+    - type: horizontal-stack
+      cards:
+      - type: custom:mushroom-template-card
+        icon: mdi:home-variant
+        primary: Ana
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/home
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:lightbulb-group
+        primary: Işıklar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/lights
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:palette-swatch-variant
+        primary: Modlar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/modes
+        card_mod:
+          style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.34) 0%,\n      rgba(99, 102, 241, 0.18) 100%)\
+            \ !important;\n  border-color: rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 16px 38px -18px rgba(139, 92, 246, 0.70),\n\
+            \    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;\n  --card-primary-color: #FFFFFF;\n}\nmushroom-shape-icon {\n  --icon-color:\
+            \ #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.40) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:shield-home
+        primary: Güvenlik
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/security
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:server
+        primary: Sistem
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/systems
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        primary: Otomasyon
+        icon: mdi:robot
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/automations
+        card_mod:
+          style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+            border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Günlük
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:home
+      primary: Home
+      secondary: Dört ampul %70 sıcak beyaz · masa %30
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_home
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'home' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(139, 92, 246, 0.30) 0%,\n      rgba(139, 92, 246, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(139, 92, 246, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(139, 92, 246, 0.80) !important;\n  --shape-color: rgba(139, 92, 246, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:home-export-outline
+      primary: Away
+      secondary: Beş ışık kapalı · kamera kuralları değişmez
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_away
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'off' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(91, 42, 134, 0.30) 0%,\n      rgba(91, 42, 134, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(91, 42, 134, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(91, 42, 134, 0.60),\n    inset 0 1px 0 rgba(255, 255,\
+          \ 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(91, 42, 134, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon {\n\
+          \  --icon-color: rgba(91, 42, 134, 0.80) !important;\n  --shape-color: rgba(91, 42, 134, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:desk
+      primary: Work
+      secondary: Ampuller %80 · masa %100 · 4000 K
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_work
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'work' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(99, 102, 241, 0.30) 0%,\n      rgba(99, 102, 241, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(99, 102, 241, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(99, 102, 241, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(99, 102, 241, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(99, 102, 241, 0.80) !important;\n  --shape-color: rgba(99, 102, 241, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Atmosfer
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:weather-night
+      primary: Night
+      secondary: Ampuller kapalı · masa %10 sıcak beyaz
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_night
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'night' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(99, 102, 241, 0.30) 0%,\n      rgba(99, 102, 241, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(99, 102, 241, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(99, 102, 241, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(99, 102, 241, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(99, 102, 241, 0.80) !important;\n  --shape-color: rgba(99, 102, 241, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:movie-open
+      primary: Movie
+      secondary: Ampuller kapalı · masa %10 mor
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_movie
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'movie' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(91, 42, 134, 0.30) 0%,\n      rgba(91, 42, 134, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(91, 42, 134, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(91, 42, 134, 0.60),\n    inset 0 1px 0 rgba(255, 255,\
+          \ 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(91, 42, 134, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon {\n\
+          \  --icon-color: rgba(91, 42, 134, 0.80) !important;\n  --shape-color: rgba(91, 42, 134, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:controller
+      primary: Gaming
+      secondary: Ampuller kapalı · masa %30 mor
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_gaming
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'gaming' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(139, 92, 246, 0.30) 0%,\n      rgba(139, 92, 246, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(139, 92, 246, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(139, 92, 246, 0.80) !important;\n  --shape-color: rgba(139, 92, 246, 0.13) !important;\n}\n{% endif %}\nha-card:active\
+          \ { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Genel
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:broom
+      primary: Cleaning
+      secondary: Beş ışık %100 · 5000 K beyaz
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_cleaning
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'cleaning' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(183, 148, 255, 0.30) 0%,\n      rgba(183, 148, 255, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(183, 148, 255, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(183, 148, 255, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(183, 148, 255, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(183, 148, 255, 0.80) !important;\n  --shape-color: rgba(183, 148, 255, 0.13) !important;\n}\n{% endif %}\n\
+          ha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      icon: mdi:lightbulb-group-off
+      primary: All Lights Off
+      secondary: Şerit dahil beş ışık kapalı
+      tap_action:
+        action: perform-action
+        perform_action: script.turn_on
+        target:
+          entity_id: script.metehantech_all_lights_off
+      card_mod:
+        style: "{%- set g = states.light.tum_isiklar -%}\n{%- set m = states.light.masa_ambiyans -%}\n{%- set gon = g is not none and g.state\
+          \ == 'on' -%}\n{%- set mon = m is not none and m.state == 'on' -%}\n{%- set gb = (g.attributes.brightness | default(0) | float(0) /\
+          \ 2.55) if gon else -1 -%}\n{%- set mb = (m.attributes.brightness | default(0) | float(0) / 2.55) if mon else -1 -%}\n{%- set gk = (g.attributes.color_temp_kelvin\
+          \ | default(0) | int(0)) if gon else 0 -%}\n{%- set mk = (m.attributes.color_temp_kelvin | default(0) | int(0)) if mon else 0 -%}\n\
+          {%- set mh = (m.attributes.hs_color[0] | float(-1))\n      if (mon and m.attributes.hs_color is defined and m.attributes.hs_color) else\
+          \ -1 -%}\n{%- set mode =\n      'off' if (gb < 0 and mb < 0)\n      else 'cleaning' if (gb >= 95 and mb >= 95 and 4800 <= gk <= 5200\
+          \ and 4800 <= mk <= 5200)\n      else 'work' if (gb >= 72 and mb >= 92 and 3800 <= gk <= 4200 and 3800 <= mk <= 4200)\n      else 'home'\
+          \ if (62 <= gb <= 78 and 22 <= mb <= 38 and 2800 <= gk <= 3200 and 2800 <= mk <= 3200)\n      else 'gaming' if (gb < 0 and 22 <= mb\
+          \ <= 40 and 260 <= mh <= 290)\n      else 'movie' if (gb < 0 and 0 < mb <= 18 and 260 <= mh <= 290)\n      else 'night' if (gb < 0 and\
+          \ 0 < mb <= 18 and 2000 <= mk <= 2800)\n      else 'none' -%}\n{% if mode == 'off' %}\nha-card {\n  background:\n    linear-gradient(152deg,\n\
+          \      rgba(183, 148, 255, 0.30) 0%,\n      rgba(183, 148, 255, 0.11) 55%,\n      rgba(21, 14, 32, 0.74) 100%) !important;\n  border-color:\
+          \ rgba(183, 148, 255, 0.62) !important;\n  box-shadow:\n    0 18px 44px -18px rgba(183, 148, 255, 0.60),\n    inset 0 1px 0 rgba(255,\
+          \ 255, 255, 0.10) !important;\n  --card-primary-color: #FFFFFF;\n  --card-secondary-color: rgba(255, 255, 255, 0.78);\n}\nmushroom-shape-icon\
+          \ {\n  --icon-color: #FFFFFF !important;\n  --shape-color: rgba(183, 148, 255, 0.42) !important;\n}\n{% else %}\nmushroom-shape-icon\
+          \ {\n  --icon-color: rgba(183, 148, 255, 0.80) !important;\n  --shape-color: rgba(183, 148, 255, 0.13) !important;\n}\n{% endif %}\n\
+          ha-card:active { transform: scale(0.962); }\n"
+      grid_options:
+        columns: 12
+    - type: markdown
+      content: Aktif mod ışıkların gerçek durumundan okunur; elle yapılan değişiklikten sonra hiçbir mod vurgulu görünmeyebilir.
+      card_mod:
+        style: "ha-card {\n  background: rgba(139, 92, 246, 0.06) !important;\n  border-color: rgba(139, 92, 246, 0.13) !important;\n  box-shadow:\
+          \ none !important;\n  padding: 2px 14px;\n}\nha-card ha-markdown {\n  font-size: 12.5px;\n  line-height: 1.45;\n  color: #9A8DB8;\n\
+          }\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Merkezi ev modu
+      show_header_toggle: false
+      entities:
+      - input_select.metehantech_mode
+      card_mod: *id001
+    - type: custom:mushroom-entity-card
+      name: Sleep
+      entity: script.metehantech_sleep
+      icon: mdi:sleep
+      tap_action:
+        action: perform-action
+        perform_action: script.metehantech_sleep
+      card_mod: *id001
+    - type: custom:mushroom-entity-card
+      name: Guest
+      entity: script.metehantech_guest
+      icon: mdi:account-group
+      tap_action:
+        action: perform-action
+        perform_action: script.metehantech_guest
+      card_mod: *id001
+    - type: custom:mushroom-entity-card
+      name: Önceki moda dön
+      entity: script.metehantech_previous_mode
+      icon: mdi:undo
+      tap_action:
+        action: perform-action
+        perform_action: script.metehantech_previous_mode
+      card_mod: *id001
+- title: Security
+  path: security
+  icon: mdi:shield-home
+  type: sections
+  max_columns: 2
+  dense_section_placement: false
+  theme: MetehanTech Dark
+  sections:
+  - type: grid
+    column_span: 2
+    cards:
+    - type: horizontal-stack
+      cards:
+      - type: custom:mushroom-template-card
+        icon: mdi:home-variant
+        primary: Ana
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/home
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:lightbulb-group
+        primary: Işıklar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/lights
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:palette-swatch-variant
+        primary: Modlar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/modes
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:shield-home
+        primary: Güvenlik
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/security
+        card_mod:
+          style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.34) 0%,\n      rgba(99, 102, 241, 0.18) 100%)\
+            \ !important;\n  border-color: rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 16px 38px -18px rgba(139, 92, 246, 0.70),\n\
+            \    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;\n  --card-primary-color: #FFFFFF;\n}\nmushroom-shape-icon {\n  --icon-color:\
+            \ #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.40) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:server
+        primary: Sistem
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/systems
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        primary: Otomasyon
+        icon: mdi:robot
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/automations
+        card_mod:
+          style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+            border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Tapo C211
+      subtitle: Canlı görüntü
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: picture-entity
+      entity: camera.tapo_c211
+      camera_view: live
+      show_name: false
+      show_state: true
+      card_mod:
+        style: "ha-card {\n  overflow: hidden;\n  padding: 0;\n}\nha-card hui-image {\n  border-radius: calc(var(--ha-card-border-radius, 26px)\
+          \ - 1px);\n  overflow: hidden;\n  display: block;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.tapo_c211_person_occupancy
+      icon: '{{ ''mdi:account-alert'' if is_state(''binary_sensor.tapo_c211_person_occupancy'', ''on'') else ''mdi:account-off-outline'' }}'
+      icon_color: '{%- set s = states(''binary_sensor.tapo_c211_person_occupancy'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'',
+        ''none''] else ''amber'' if s == ''on'' else ''teal'' }}'
+      primary: Kişi algılama
+      secondary: '{{ ''Kişi var'' if is_state(''binary_sensor.tapo_c211_person_occupancy'', ''on'') else ''Temiz'' }} · {{ states(''sensor.tapo_c211_person_count'')
+        }} kişi'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: binary_sensor.tapo_c211_motion
+        icon: mdi:motion-sensor
+        icon_color: '{%- set s = states(''binary_sensor.tapo_c211_motion'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none'']
+          else ''amber'' if s == ''on'' else ''teal'' }}'
+        content: '{{ ''Hareket'' if is_state(''binary_sensor.tapo_c211_motion'', ''on'') else ''Sakin'' }}'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.tapo_c211_person_count
+        icon: mdi:account-multiple
+        icon_color: blue
+        content: '{{ states(''sensor.tapo_c211_person_count'') }}'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: switch.tapo_c211_recordings
+        icon: mdi:record-rec
+        icon_color: '{%- set s = states(''switch.tapo_c211_recordings'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''teal'' if s == ''on'' else ''red'' }}'
+        content: Kayıt {{ 'açık' if is_state('switch.tapo_c211_recordings', 'on') else 'kapalı' }}
+        tap_action:
+          action: none
+      - type: template
+        entity: switch.tapo_c211_detect
+        icon: mdi:motion-sensor
+        icon_color: '{%- set s = states(''switch.tapo_c211_detect'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''teal'' if s == ''on'' else ''amber'' }}'
+        content: Algılama {{ 'açık' if is_state('switch.tapo_c211_detect', 'on') else 'kapalı' }}
+        tap_action:
+          action: none
+      - type: template
+        entity: switch.tapo_c211_snapshots
+        icon: mdi:camera-image
+        icon_color: '{%- set s = states(''switch.tapo_c211_snapshots'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''teal'' if s == ''on'' else ''amber'' }}'
+        content: Snapshot {{ 'açık' if is_state('switch.tapo_c211_snapshots', 'on') else 'kapalı' }}
+        tap_action:
+          action: none
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Son person görüntüsü
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: picture-entity
+      entity: image.tapo_c211_person
+      show_name: false
+      show_state: true
+      card_mod:
+        style: "ha-card {\n  overflow: hidden;\n  padding: 0;\n}\nha-card hui-image {\n  border-radius: calc(var(--ha-card-border-radius, 26px)\
+          \ - 1px);\n  overflow: hidden;\n  display: block;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: automation.metehantech_tapo_android_person_push
+      icon: mdi:cellphone-message
+      icon_color: '{%- set s = states(''automation.metehantech_tapo_android_person_push'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'',
+        ''none''] else ''teal'' if s == ''on'' else ''amber'' }}'
+      primary: Telefon bildirimi
+      secondary: '{{ ''Aktif'' if is_state(''automation.metehantech_tapo_android_person_push'', ''on'') else ''Kapalı'' }} · evde değilken'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: automation.metehantech_tapo_person_notification
+      icon: mdi:bell-ring-outline
+      icon_color: '{%- set s = states(''automation.metehantech_tapo_person_notification'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'',
+        ''none''] else ''teal'' if s == ''on'' else ''amber'' }}'
+      primary: HA içi bildirim
+      secondary: '{{ ''Aktif'' if is_state(''automation.metehantech_tapo_person_notification'', ''on'') else ''Kapalı'' }}'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: person.metehan
+      icon: '{{ ''mdi:home-account'' if is_state(''person.metehan'', ''home'') else ''mdi:home-export-outline'' }}'
+      icon_color: '{{ ''teal'' if is_state(''person.metehan'', ''home'') else ''amber'' }}'
+      primary: Metehan
+      secondary: '{{ ''Evde'' if is_state(''person.metehan'', ''home'') else ''Dışarıda'' if is_state(''person.metehan'', ''not_home'') else states(''person.metehan'')
+        }}'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: markdown
+      content: 'Son snapshot durumu: **{{ states(''image.tapo_c211_person'') }}**
+
+
+        Otomasyonun aktif olması bildirimin telefona ulaştığının garantisi değildir.'
+      card_mod:
+        style: "ha-card {\n  background: rgba(139, 92, 246, 0.06) !important;\n  border-color: rgba(139, 92, 246, 0.13) !important;\n  box-shadow:\
+          \ none !important;\n  padding: 2px 14px;\n}\nha-card ha-markdown {\n  font-size: 12.5px;\n  line-height: 1.45;\n  color: #9A8DB8;\n\
+          }\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Güvenlik sağlık durumu
+      show_header_toggle: false
+      entities:
+      - entity: sensor.mt_frigate_alert
+        name: Frigate
+      - entity: sensor.mt_camera_alert
+        name: Kamera akışı
+      - entity: sensor.mt_detection_alert
+        name: Detection
+      - entity: sensor.mt_recording_alert
+        name: Kayıt ilerlemesi
+      - entity: sensor.mt_snapshot_alert
+        name: Snapshot
+      - entity: sensor.mt_ffmpeg_alert
+        name: FFmpeg
+      card_mod: *id001
+    - type: markdown
+      title: Son 10 kişi olayı
+      content: '{% for e in state_attr(''sensor.mt_runtime'',''security_events'') or [] %}
+
+        • {{ e.start_time | timestamp_custom(''%d.%m %H:%M:%S'') }} · {{ e.label }} · {{ ''📷 snapshot var'' if e.has_snapshot else ''snapshot
+        yok'' }}
+
+        {% else %}Henüz olay verisi yok.{% endfor %}'
+      card_mod: *id001
+    - type: entities
+      title: Son güvenlik bildirimi
+      show_header_toggle: false
+      entities:
+      - input_datetime.metehantech_last_person
+      card_mod: *id001
+- title: Systems
+  path: systems
+  icon: mdi:server
+  type: sections
+  max_columns: 3
+  dense_section_placement: false
+  theme: MetehanTech Dark
+  sections:
+  - type: grid
+    column_span: 3
+    cards:
+    - type: horizontal-stack
+      cards:
+      - type: custom:mushroom-template-card
+        icon: mdi:home-variant
+        primary: Ana
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/home
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:lightbulb-group
+        primary: Işıklar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/lights
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:palette-swatch-variant
+        primary: Modlar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/modes
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:shield-home
+        primary: Güvenlik
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/security
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:server
+        primary: Sistem
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/systems
+        card_mod:
+          style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.34) 0%,\n      rgba(99, 102, 241, 0.18) 100%)\
+            \ !important;\n  border-color: rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 16px 38px -18px rgba(139, 92, 246, 0.70),\n\
+            \    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;\n  --card-primary-color: #FFFFFF;\n}\nmushroom-shape-icon {\n  --icon-color:\
+            \ #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.40) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        primary: Otomasyon
+        icon: mdi:robot
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/automations
+        card_mod:
+          style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+            border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: MetehanTech Pi5
+      subtitle: Uptime {{ states('sensor.pi5_uptime') }}
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.pi5_online
+      icon: mdi:raspberry-pi
+      icon_color: '{%- set s = states(''binary_sensor.pi5_online'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else ''teal''
+        if s == ''on'' else ''red'' }}'
+      primary: Pi5
+      secondary: '{{ ''Online'' if is_state(''binary_sensor.pi5_online'', ''on'') else ''Offline'' }} · {{ states(''sensor.pi5_temperature'')
+        }} °C'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: sensor.pi5_temperature
+        icon: mdi:thermometer
+        icon_color: '{%- set v = states(''sensor.pi5_temperature'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 75 else ''amber''
+          if v >= 60 else ''teal'' }}'
+        content: '{{ states(''sensor.pi5_temperature'') }}°'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pi5_cpu
+        icon: mdi:cpu-64-bit
+        icon_color: '{%- set v = states(''sensor.pi5_cpu'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 90 else ''amber'' if
+          v >= 70 else ''teal'' }}'
+        content: CPU {{ states('sensor.pi5_cpu') }}%
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pi5_ram
+        icon: mdi:memory
+        icon_color: '{%- set v = states(''sensor.pi5_ram'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 92 else ''amber'' if
+          v >= 75 else ''teal'' }}'
+        content: RAM {{ states('sensor.pi5_ram') }}%
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pi5_disk
+        icon: mdi:harddisk
+        icon_color: '{%- set v = states(''sensor.pi5_disk'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 90 else ''amber'' if
+          v >= 75 else ''teal'' }}'
+        content: Disk {{ states('sensor.pi5_disk') }}%
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pi5_uptime
+        icon: mdi:clock-outline
+        icon_color: blue
+        content: '{{ states(''sensor.pi5_uptime'') }}'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: binary_sensor.pi5_docker
+        icon: mdi:docker
+        icon_color: '{%- set s = states(''binary_sensor.pi5_docker'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''teal'' if s == ''on'' else ''red'' }}'
+        content: Docker {{ 'açık' if is_state('binary_sensor.pi5_docker', 'on') else 'kapalı' }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.frigate_status
+        icon: mdi:cctv
+        icon_color: '{{ ''teal'' if states(''sensor.frigate_status'') == ''running'' else ''red'' }}'
+        content: Frigate {{ states('sensor.frigate_status') }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pi5_nextcloud
+        icon: mdi:cloud-outline
+        icon_color: '{%- set s = states(''sensor.pi5_nextcloud'') -%}{{ ''teal'' if s == ''OK'' else ''amber'' if s == ''MAINTENANCE'' else ''red''
+          }}'
+        content: Nextcloud {{ states('sensor.pi5_nextcloud') }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: binary_sensor.pi5_tailscale
+        icon: mdi:shield-lock-outline
+        icon_color: '{%- set s = states(''binary_sensor.pi5_tailscale'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''teal'' if s == ''on'' else ''red'' }}'
+        content: Tailscale {{ 'açık' if is_state('binary_sensor.pi5_tailscale', 'on') else 'kapalı' }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: binary_sensor.pi5_cloudflared
+        icon: mdi:cloud-lock-outline
+        icon_color: '{%- set s = states(''binary_sensor.pi5_cloudflared'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none'']
+          else ''teal'' if s == ''on'' else ''red'' }}'
+        content: Cloudflared {{ 'açık' if is_state('binary_sensor.pi5_cloudflared', 'on') else 'kapalı' }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: binary_sensor.pi5_throttled
+        icon: mdi:speedometer-slow
+        icon_color: '{%- set s = states(''binary_sensor.pi5_throttled'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''red'' if s == ''on'' else ''teal'' }}'
+        content: Throttling {{ 'var' if is_state('binary_sensor.pi5_throttled', 'on') else 'yok' }}
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: MetehanTech PcOld
+      subtitle: Uptime {{ states('sensor.pcold_uptime') }}
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.pcold_online
+      icon: mdi:desktop-tower
+      icon_color: '{%- set s = states(''binary_sensor.pcold_online'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+        ''teal'' if s == ''on'' else ''red'' }}'
+      primary: PcOld
+      secondary: '{{ ''Online'' if is_state(''binary_sensor.pcold_online'', ''on'') else ''Offline'' }} · {{ states(''sensor.pcold_temperature'')
+        }} °C'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: sensor.pcold_temperature
+        icon: mdi:thermometer
+        icon_color: '{%- set v = states(''sensor.pcold_temperature'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 75 else ''amber''
+          if v >= 60 else ''teal'' }}'
+        content: '{{ states(''sensor.pcold_temperature'') }}°'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pcold_cpu
+        icon: mdi:cpu-64-bit
+        icon_color: '{%- set v = states(''sensor.pcold_cpu'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 90 else ''amber'' if
+          v >= 70 else ''teal'' }}'
+        content: CPU {{ states('sensor.pcold_cpu') }}%
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pcold_ram
+        icon: mdi:memory
+        icon_color: '{%- set v = states(''sensor.pcold_ram'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 92 else ''amber'' if
+          v >= 75 else ''teal'' }}'
+        content: RAM {{ states('sensor.pcold_ram') }}%
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pcold_disk
+        icon: mdi:harddisk
+        icon_color: '{%- set v = states(''sensor.pcold_disk'') | float(-1) -%}{{ ''disabled'' if v < 0 else ''red'' if v >= 90 else ''amber''
+          if v >= 75 else ''teal'' }}'
+        content: Disk {{ states('sensor.pcold_disk') }}%
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.pcold_uptime
+        icon: mdi:clock-outline
+        icon_color: blue
+        content: '{{ states(''sensor.pcold_uptime'') }}'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: binary_sensor.pcold_docker
+        icon: mdi:docker
+        icon_color: '{%- set s = states(''binary_sensor.pcold_docker'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''teal'' if s == ''on'' else ''red'' }}'
+        content: Docker {{ 'açık' if is_state('binary_sensor.pcold_docker', 'on') else 'kapalı' }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: binary_sensor.pcold_portainer
+        icon: mdi:view-dashboard-outline
+        icon_color: '{%- set s = states(''binary_sensor.pcold_portainer'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none'']
+          else ''teal'' if s == ''on'' else ''red'' }}'
+        content: Portainer {{ 'açık' if is_state('binary_sensor.pcold_portainer', 'on') else 'kapalı' }}
+        tap_action:
+          action: more-info
+      - type: template
+        entity: binary_sensor.pcold_smart
+        icon: mdi:harddisk-remove
+        icon_color: '{%- set s = states(''binary_sensor.pcold_smart'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none''] else
+          ''red'' if s == ''on'' else ''teal'' }}'
+        content: SMART sorunu {{ 'var' if is_state('binary_sensor.pcold_smart', 'on') else 'yok' }}
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: markdown
+      content: '**MQTT:** entegrasyon kurulu; ayrı broker sağlık entity’si olmadığı için bağımsız online durumu gösterilmiyor.'
+      card_mod:
+        style: "ha-card {\n  background: rgba(139, 92, 246, 0.06) !important;\n  border-color: rgba(139, 92, 246, 0.13) !important;\n  box-shadow:\
+          \ none !important;\n  padding: 2px 14px;\n}\nha-card ha-markdown {\n  font-size: 12.5px;\n  line-height: 1.45;\n  color: #9A8DB8;\n\
+          }\n"
+      grid_options:
+        columns: 12
+  - type: grid
+    cards:
+    - type: custom:mushroom-title-card
+      title: Network ve yedek
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: binary_sensor.archer_ax55_wan_status
+      icon: mdi:router-wireless
+      icon_color: '{%- set s = states(''binary_sensor.archer_ax55_wan_status'') -%}{{ ''disabled'' if s in [''unknown'', ''unavailable'', ''none'']
+        else ''teal'' if s == ''on'' else ''red'' }}'
+      primary: Archer AX55
+      secondary: WAN {{ 'bağlı' if is_state('binary_sensor.archer_ax55_wan_status', 'on') else 'kopuk' }}
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: sensor.archer_ax55_download_speed
+        icon: mdi:download
+        icon_color: teal
+        content: '{{ states(''sensor.archer_ax55_download_speed'') }}'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.archer_ax55_upload_speed
+        icon: mdi:upload
+        icon_color: blue
+        content: '{{ states(''sensor.archer_ax55_upload_speed'') }}'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-template-card
+      entity: sensor.backup_backup_manager_state
+      icon: mdi:backup-restore
+      icon_color: '{%- set s = states(''sensor.backup_backup_manager_state'') -%}{{ ''teal'' if s == ''idle'' else ''amber'' }}'
+      primary: Home Assistant Backup
+      secondary: '{{ states(''sensor.backup_backup_manager_state'') }}'
+      tap_action:
+        action: more-info
+      card_mod:
+        style: 'ha-card:active { transform: scale(0.962); }
+
+          '
+      grid_options:
+        columns: 12
+    - type: custom:mushroom-chips-card
+      alignment: start
+      chips:
+      - type: template
+        entity: sensor.backup_last_successful_automatic_backup
+        icon: mdi:check-circle-outline
+        icon_color: '{{ ''disabled'' if states(''sensor.backup_last_successful_automatic_backup'') in [''unknown'', ''unavailable''] else ''teal''
+          }}'
+        content: '{%- set s = states(''sensor.backup_last_successful_automatic_backup'') -%}{{ ''Son başarılı: '' ~ (''—'' if s in [''unknown'',
+          ''unavailable'', ''none''] else s) }}'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.backup_last_attempted_automatic_backup
+        icon: mdi:history
+        icon_color: '{{ ''disabled'' if states(''sensor.backup_last_attempted_automatic_backup'') in [''unknown'', ''unavailable''] else ''blue''
+          }}'
+        content: '{%- set s = states(''sensor.backup_last_attempted_automatic_backup'') -%}{{ ''Son deneme: '' ~ (''—'' if s in [''unknown'',
+          ''unavailable'', ''none''] else s) }}'
+        tap_action:
+          action: more-info
+      - type: template
+        entity: sensor.backup_next_scheduled_automatic_backup
+        icon: mdi:calendar-clock
+        icon_color: '{{ ''disabled'' if states(''sensor.backup_next_scheduled_automatic_backup'') in [''unknown'', ''unavailable''] else ''purple''
+          }}'
+        content: '{%- set s = states(''sensor.backup_next_scheduled_automatic_backup'') -%}{{ ''Sonraki: '' ~ (''—'' if s in [''unknown'', ''unavailable'',
+          ''none''] else s) }}'
+        tap_action:
+          action: more-info
+      card_mod:
+        style: "ha-card {\n  background: none !important;\n  border: none !important;\n  box-shadow: none !important;\n  -webkit-backdrop-filter:\
+          \ none !important;\n  backdrop-filter: none !important;\n}\n"
+      grid_options:
+        columns: 12
+    - type: markdown
+      content: Bu alan yalnızca Home Assistant yedeğini gösterir; Pi5/PcOld çapraz yedeklerini temsil etmez.
+      card_mod:
+        style: "ha-card {\n  background: rgba(139, 92, 246, 0.06) !important;\n  border-color: rgba(139, 92, 246, 0.13) !important;\n  box-shadow:\
+          \ none !important;\n  padding: 2px 14px;\n}\nha-card ha-markdown {\n  font-size: 12.5px;\n  line-height: 1.45;\n  color: #9A8DB8;\n\
+          }\n"
+      grid_options:
+        columns: 12
+- title: Otomasyonlar
+  path: automations
+  icon: mdi:robot
+  type: sections
+  max_columns: 3
+  dense_section_placement: false
+  theme: MetehanTech Dark
+  sections:
+  - type: grid
+    column_span: 3
+    cards:
+    - type: horizontal-stack
+      cards:
+      - type: custom:mushroom-template-card
+        icon: mdi:home-variant
+        primary: Ana
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/home
+        card_mod:
+          style: "ha-card {\n  background:\n    linear-gradient(152deg,\n      rgba(139, 92, 246, 0.34) 0%,\n      rgba(99, 102, 241, 0.18) 100%)\
+            \ !important;\n  border-color: rgba(139, 92, 246, 0.62) !important;\n  box-shadow:\n    0 16px 38px -18px rgba(139, 92, 246, 0.70),\n\
+            \    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;\n  --card-primary-color: #FFFFFF;\n}\nmushroom-shape-icon {\n  --icon-color:\
+            \ #FFFFFF !important;\n  --shape-color: rgba(139, 92, 246, 0.40) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:lightbulb-group
+        primary: Işıklar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/lights
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:palette-swatch-variant
+        primary: Modlar
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/modes
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:shield-home
+        primary: Güvenlik
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/security
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        icon: mdi:server
+        primary: Sistem
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/systems
+        card_mod:
+          style: "ha-card {\n  --card-primary-color: #9A8DB8;\n}\nmushroom-shape-icon {\n  --icon-color: rgba(167, 155, 192, 0.92) !important;\n\
+            \  --shape-color: rgba(139, 92, 246, 0.12) !important;\n}\nha-card:active { transform: scale(0.962); }\n"
+      - type: custom:mushroom-template-card
+        primary: Otomasyon
+        icon: mdi:robot
+        layout: vertical
+        fill_container: true
+        tap_action:
+          action: navigate
+          navigation_path: /metehantech-home/automations
+        card_mod:
+          style: 'ha-card { background: linear-gradient(158deg, rgba(52,33,79,.70), rgba(21,14,32,.74)); border: 1px solid rgba(139,92,246,.16);
+            border-radius: 22px; box-shadow: 0 0 22px -14px rgba(139,92,246,.35); }'
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Ev kontrolü
+      show_header_toggle: false
+      entities:
+      - input_select.metehantech_mode
+      - input_boolean.metehantech_pause
+      - input_boolean.metehantech_presence_enabled
+      - input_boolean.metehantech_break_enabled
+      card_mod: *id001
+    - type: markdown
+      title: Duraklatma kapsamı
+      content: Ev, zamanlı ışık ve hava rutinleri duraklar. Manuel mod seçimi çalışır. Güvenlik, sistem ve backup uyarıları **aktif kalır**. Presence
+        başlangıçta kapalıdır; telefon/tablet konumu güvenilirliği doğrulanmalıdır.
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Ev
+      show_header_toggle: false
+      entities:
+      - entity: automation.metehantech_mode_changed
+        secondary_info: last-triggered
+      - entity: automation.metehantech_presence
+        secondary_info: last-triggered
+      - entity: automation.metehantech_work_break
+        secondary_info: last-triggered
+      - entity: automation.metehantech_weather_morning
+        secondary_info: last-triggered
+      - entity: automation.metehantech_weather_severe
+        secondary_info: last-triggered
+      - entity: automation.metehantech_weather_uv
+        secondary_info: last-triggered
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Işıklar
+      show_header_toggle: false
+      entities:
+      - entity: automation.metehantech_sleep_finish
+        secondary_info: last-triggered
+      - entity: automation.metehantech_manual_ui
+        secondary_info: last-triggered
+      - entity: automation.metehantech_manual_physical
+        secondary_info: last-triggered
+      - entity: automation.metehantech_startup_preserve
+        secondary_info: last-triggered
+      - entity: automation.metehantech_sunset
+        secondary_info: last-triggered
+      - entity: automation.metehantech_warm_evening
+        secondary_info: last-triggered
+      - entity: automation.metehantech_sunrise
+        secondary_info: last-triggered
+      - entity: automation.metehantech_night_defaults
+        secondary_info: last-triggered
+      - entity: automation.metehantech_away_stray
+        secondary_info: last-triggered
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Güvenlik
+      show_header_toggle: false
+      entities:
+      - entity: automation.metehantech_tapo_android_person_push
+        secondary_info: last-triggered
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Sistem
+      show_header_toggle: false
+      entities:
+      - entity: automation.metehantech_health_notifications
+        secondary_info: last-triggered
+      - entity: automation.metehantech_health_startup
+        secondary_info: last-triggered
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Backup
+      show_header_toggle: false
+      entities:
+      - entity: automation.metehantech_backup_lifecycle
+        secondary_info: last-triggered
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: entities
+      title: Manuel kontrol kilitleri
+      show_header_toggle: false
+      entities:
+      - input_boolean.metehantech_manual_odam_lamba
+      - input_boolean.metehantech_manual_oda_2
+      - input_boolean.metehantech_manual_oda_3
+      - input_boolean.metehantech_manual_oda_4
+      - input_boolean.metehantech_manual_masa_ambiyans
+      card_mod: *id001
+    - type: markdown
+      title: Manuel öncelik
+      content: Manuel değişiklik bir sonraki mod değişimine kadar korunur. Kilidi burada kapatarak ışığı tekrar rutinlere bırakabilirsin. 02–07
+        fiziksel açılış rutini, Tapo kaynak ayrımı kesin olmadığı için başlangıçta kapalıdır.
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: markdown
+      title: Backup · mevcut altyapı
+      content: '{% set bs=state_attr(''sensor.mt_runtime'',''backups'') or {} %}
+
+        {% for node,b in bs.items() %}
+
+        **{{ node }}** · {{ b.get(''status'',''unknown'') }}
+
+        Son başarı: {{ as_local(as_datetime(b.last_success)).strftime(''%d.%m %H:%M'') if b.get(''last_success'') else ''bilinmiyor'' }}
+
+        Son deneme: {{ b.get(''started_at'',''bilinmiyor'') }}
+
+        Sonraki: {{ b.get(''next'') or ''otomatik zamanlama yok'' }}
+
+        {% endfor %}
+
+        {% set r=state_attr(''sensor.mt_runtime'',''backup_request'') or {} %}
+
+        İstek: {{ r.get(''status'',''yok'') }} {{ r.get(''reason'','''') }}'
+      card_mod: *id001
+    - type: entities
+      title: Backup hedef diskleri
+      show_header_toggle: false
+      entities:
+      - sensor.pi5_disk
+      - sensor.pcold_disk
+      - binary_sensor.pcold_online
+      card_mod: *id001
+    - type: custom:mushroom-entity-card
+      name: Şimdi Yedekle · Pi5
+      entity: script.metehantech_backup_pi
+      icon: mdi:backup-restore
+      tap_action:
+        action: perform-action
+        perform_action: script.metehantech_backup_pi
+      card_mod: *id001
+    - type: custom:mushroom-entity-card
+      name: Şimdi Yedekle · PcOld
+      entity: script.metehantech_backup_pcold
+      icon: mdi:backup-restore
+      tap_action:
+        action: perform-action
+        perform_action: script.metehantech_backup_pcold
+      card_mod: *id001
+  - type: grid
+    column_span: 1
+    cards:
+    - type: markdown
+      title: Aktif Uyarılar
+      content: '{{ (''Metrik bekleniyor'' if state_attr(''sensor.mt_active_alerts'',''unknown_count'')|int(0)>0 else ''✓ Sistem normal'') if is_state(''sensor.mt_active_alerts'',''0'')
+        else '''' }}
+
+        {% set ids=state_attr(''sensor.mt_active_alerts'',''entities'') or [] %}
+
+        {% for e in ids %}{% if states(e) in [''WARNING'',''CRITICAL''] %}
+
+        {{ ''🔴'' if states(e)==''CRITICAL'' else ''⚠'' }} {{ state_attr(e,''friendly_label'') }}
+
+        {% endif %}{% endfor %}
+
+        {% for a in (state_attr(''sensor.mt_runtime'',''alerts'') or [])[:5] %}
+
+        {{ ''🔴'' if a.severity==''critical'' else ''⚠'' }} {{ a.title }}
+
+        {% endfor %}'
+      card_mod: *id001
+    - type: markdown
+      title: Bildirim geçmişi
+      content: '{% for e in (state_attr(''sensor.mt_alert_history'',''events'') or [])[:10] %}
+
+        • {{ as_local(as_datetime(e.timestamp)).strftime(''%d.%m %H:%M'') }} · {{ e.severity }} · {{ e.message }}
+
+        {% else %}Henüz bildirim olayı yok.{% endfor %}'
+      card_mod: *id001
+    - type: markdown
+      title: Mevcut Alert Center geçmişi
+      content: '{% for e in (state_attr(''sensor.mt_runtime'',''history'') or [])[:10] %}
+
+        • {{ as_local(as_datetime(e.created_at)).strftime(''%d.%m %H:%M'') }} · {{ e.severity }} · {{ e.title }} · {{ ''düzeldi'' if e.status==''resolved''
+        else ''aktif'' }}
+
+        {% endfor %}'
+      card_mod: *id001

@@ -1,0 +1,163 @@
+- id: metehantech_tapo_person_notification
+  alias: MetehanTech Tapo Person Notification
+  description: Eski yol; merkezi mod kontrollü Frigate event bildirimiyle değiştirildi. Kapalı tutulur.
+  mode: single
+  trace:
+    stored_traces: 10
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.tapo_c211_person_occupancy
+    from: 'off'
+    to: 'on'
+    id: person
+  - trigger: event
+    event_type: metehantech_person_notification_test
+    id: test
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.id == ''test'' or is_state(''person.metehan'', ''not_home'') }}'
+  actions:
+  - action: persistent_notification.create
+    data:
+      notification_id: metehantech_tapo_person
+      title: '{{ ''TEST — '' if trigger.id == ''test'' else '''' }}MetehanTech: kişi algılama'
+      message: '{% if trigger.id == ''test'' %}Bu sentetik otomasyon testidir; gerçek kişi algılandığı anlamına gelmez. Telefon bildirimi gönderilmedi.{%
+        else %}Tapo C211 kamerasında kişi algılandı. Saat: {{ now().strftime(''%H:%M:%S'') }}. Frigate üzerinden olayı ve varsa snapshot görüntüsünü
+        inceleyebilirsin.{% endif %}'
+  - event: metehantech_person_notification_created
+    event_data:
+      camera: tapo_c211
+      test: '{{ trigger.id == ''test'' }}'
+  - if:
+    - condition: template
+      value_template: '{{ trigger.id == ''test'' }}'
+    then:
+    - action: system_log.write
+      data:
+        level: warning
+        logger: metehantech.notification_test
+        message: 'METEHANTECH_TEST_OK: synthetic person event handled; persistent_notification.create completed; no phone push.'
+  initial_state: false
+- id: metehantech_person_test_once
+  alias: MetehanTech Person Test Once
+  initial_state: false
+  triggers:
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: template
+    value_template: '{{ as_timestamp(now()) < 1789887931 }}'
+  actions:
+  - delay: 00:00:10
+  - event: metehantech_person_notification_test
+    event_data:
+      synthetic: true
+  - delay: 00:00:02
+  - action: automation.turn_off
+    target:
+      entity_id: '{{ this.entity_id }}'
+- id: metehantech_tapo_android_person_push
+  alias: MetehanTech Tapo Android Person Push
+  initial_state: true
+  description: Gerçek Frigate person event; yalnız telefon ev dışında; olay kimliği + 3 dakika cooldown.
+  mode: single
+  max_exceeded: silent
+  trace:
+    stored_traces: 10
+  triggers:
+  - trigger: mqtt
+    topic: frigate/events
+  conditions:
+  - condition: template
+    value_template: '{{ trigger is defined and trigger.payload_json is defined and trigger.payload_json.get(''type'') in [''new'',''update'',''end'']
+      and trigger.payload_json.get(''after'',{}).get(''camera'') == ''tapo_c211'' and trigger.payload_json.get(''after'',{}).get(''label'') ==
+      ''person'' and not trigger.payload_json.get(''after'',{}).get(''false_positive'',false) }}'
+  - condition: template
+    value_template: '{{ is_state(''input_boolean.metehantech_camera_away'',''on'') and states(''device_tracker.ana_cihaz_a72'') not in [''home'',''unknown'',''unavailable'']
+      }}'
+  - condition: template
+    value_template: '{{ trigger.payload_json.after.id != states(''input_text.metehantech_last_person_id'') and as_timestamp(now())-as_timestamp(states(''input_datetime.metehantech_last_person''),0)>180
+      }}'
+  actions:
+  - action: input_text.set_value
+    data:
+      value: '{{ trigger.payload_json.after.id }}'
+    target:
+      entity_id: input_text.metehantech_last_person_id
+  - action: input_datetime.set_datetime
+    data:
+      timestamp: '{{ as_timestamp(now()) }}'
+    target:
+      entity_id: input_datetime.metehantech_last_person
+  - action: logbook.log
+    data:
+      name: CRITICAL · Kişi algılandı
+      message: '{{ states("input_select.metehantech_mode") }} · {{ trigger.payload_json.after.id }}'
+      entity_id: image.tapo_c211_person
+  - event: metehantech_alert
+    event_data:
+      severity: CRITICAL
+      source: camera.tapo_c211
+      message: Ev dışındayken kişi algılandı · {{ trigger.payload_json.after.id }}
+      recovery: false
+  - wait_template: '{{ as_timestamp(states(''image.tapo_c211_person''),0) >= trigger.payload_json.after.start_time | float - 5 }}'
+    timeout: 00:00:08
+    continue_on_timeout: true
+  - action: persistent_notification.create
+    data:
+      notification_id: metehantech_tapo_person
+      title: CRITICAL · Kişi algılandı
+      message: '{{ now().strftime("%d.%m %H:%M:%S") }} · {{ states("input_select.metehantech_mode") }} · Tapo C211'
+  - action: notify.mobile_app_ana_cihaz_a72
+    data:
+      title: MetehanTech · CRITICAL
+      message: Ev dışındayken kişi algılandı · {{ now().strftime("%H:%M:%S") }}
+      data:
+        image: '{{ ''/api/image_proxy/image.tapo_c211_person'' if as_timestamp(states(''image.tapo_c211_person''),0) >= trigger.payload_json.after.start_time
+          | float - 5 else ''/api/camera_proxy/camera.tapo_c211'' }}'
+        clickAction: /metehantech-home/security
+        tag: metehantech-tapo-person
+        group: metehantech-camera
+        channel: MetehanTech Kamera
+        priority: high
+        ttl: 300
+  - delay: 00:03:00
+- id: metehantech_android_push_test_once
+  alias: MetehanTech Android Push Test Once
+  initial_state: false
+  triggers:
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: template
+    value_template: '{{ as_timestamp(now()) < 1789890716 }}'
+  actions:
+  - delay: 00:00:15
+  - action: notify.mobile_app_ana_cihaz_a72
+    data:
+      title: MetehanTech Kamera
+      message: TEST — Tapo C211 bildirim testi. Görseli açıp bildirime dokunarak kamerayı kontrol et.
+      data:
+        image: /api/image_proxy/image.tapo_c211_person
+        clickAction: entityId:camera.tapo_c211
+        tag: metehantech-tapo-test
+        group: metehantech-camera
+        channel: MetehanTech Kamera
+        ttl: 300
+        priority: high
+  - event: metehantech_android_push_requested
+    event_data:
+      camera: tapo_c211
+      target: ana_cihaz_a72
+      test: true
+  - action: system_log.write
+    data:
+      level: warning
+      logger: metehantech.android_test
+      message: 'ANDROID_PUSH_TEST_REQUESTED: notify.mobile_app_ana_cihaz_a72 service completed; phone display not yet confirmed.'
+  - action: automation.turn_on
+    target:
+      entity_id: automation.metehantech_tapo_android_person_push
+  - action: automation.turn_off
+    target:
+      entity_id: '{{ this.entity_id }}'

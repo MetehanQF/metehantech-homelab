@@ -1,0 +1,60 @@
+name: metehantech-dns
+
+# MetehanTech DNS Center — AdGuard Home
+#
+# Security posture (Phase 3/4/16):
+#   * non-root (uid/gid 1000), every Linux capability dropped, no-new-privileges
+#   * no Docker socket, no host network, no host filesystem beyond ./conf and ./work
+#   * DNS runs on unprivileged port 3053 INSIDE the container; the privileged host-side
+#     :53 binding is done by dockerd's DNAT. NET_BIND_SERVICE is nevertheless re-added
+#     because the shipped AdGuardHome binary carries cap_net_bind_service as a FILE
+#     capability — with an empty bounding set execve() itself fails with EPERM
+#     ("exec ...: operation not permitted"). It is the only capability granted.
+#   * published on specific host addresses ONLY — never 0.0.0.0.
+#     the host's LAN + Tailscale addresses (see .env). A WAN packet is addressed to the
+#     public IP, not to these, so it cannot reach the resolver without a router
+#     port-forward (none exists, and none may be created).
+#   * image pinned by digest (v0.107.79, linux/arm64)
+
+services:
+  adguardhome:
+    image: adguard/adguardhome@sha256:aba9e3bf0613be3ba3755e1fc311b126e2c24bec25e18b6483894a88283074f0
+    container_name: metehantech-adguard
+    user: "1000:1000"
+    restart: unless-stopped
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      # Adresler .env dosyasindan gelir (Git disi). ":?" sozdizimi, deger
+      # tanimsizsa Compose'un 0.0.0.0'a dusmek yerine hata vermesini saglar —
+      # bu servis icin sessiz bir genis bind acik resolver demek olurdu.
+      # --- DNS: LAN ---
+      - "${PRIMARY_NODE_IP:?.env icinde PRIMARY_NODE_IP tanimli olmali}:53:3053/udp"
+      - "${PRIMARY_NODE_IP:?.env icinde PRIMARY_NODE_IP tanimli olmali}:53:3053/tcp"
+      # --- DNS: Tailscale ---
+      - "${PRIMARY_NODE_TAILSCALE_IP:?.env icinde PRIMARY_NODE_TAILSCALE_IP tanimli olmali}:53:3053/udp"
+      - "${PRIMARY_NODE_TAILSCALE_IP:?.env icinde PRIMARY_NODE_TAILSCALE_IP tanimli olmali}:53:3053/tcp"
+      # --- Admin UI / API: loopback (Control Center server-side), LAN, Tailscale ---
+      - "127.0.0.1:3000:3000/tcp"
+      - "${PRIMARY_NODE_IP:?.env icinde PRIMARY_NODE_IP tanimli olmali}:3000:3000/tcp"
+      - "${PRIMARY_NODE_TAILSCALE_IP:?.env icinde PRIMARY_NODE_TAILSCALE_IP tanimli olmali}:3000:3000/tcp"
+    volumes:
+      - ./conf:/opt/adguardhome/conf
+      - ./work:/opt/adguardhome/work
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/login.html && nc -z 127.0.0.1 3053"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+
+networks:
+  default:
+    name: metehantech-dns_default

@@ -1,0 +1,60 @@
+title: MetehanTech Systems
+views:
+  - title: Systems
+    path: systems
+    type: sidebar
+    cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: entities
+            title: Pi5
+            entities:
+              - entity: binary_sensor.pi5_online
+                name: Online
+              - entity: sensor.pi5_cpu
+                name: CPU
+              - entity: sensor.pi5_temperature
+                name: Temperature
+              - entity: sensor.pi5_ram
+                name: RAM
+              - entity: sensor.pi5_disk
+                name: Disk
+              - entity: sensor.pi5_uptime
+                name: Uptime
+              - entity: binary_sensor.pi5_docker
+                name: Docker
+              - entity: binary_sensor.pi5_cloudflared
+                name: Cloudflared
+              - entity: binary_sensor.pi5_tailscale
+                name: Tailscale
+              - entity: binary_sensor.pi5_rustdesk
+                name: RustDesk
+              - entity: binary_sensor.pi5_throttled
+                name: Throttled
+              - entity: sensor.frigate_status
+                name: Frigate
+              - entity: sensor.pi5_nextcloud
+                name: Nextcloud
+          - type: entities
+            title: PcOld
+            entities:
+              - entity: binary_sensor.pcold_online
+                name: Online
+              - entity: sensor.pcold_cpu
+                name: CPU
+              - entity: sensor.pcold_temperature
+                name: Temperature
+              - entity: sensor.pcold_ram
+                name: RAM
+              - entity: sensor.pcold_disk
+                name: Disk
+              - entity: sensor.pcold_uptime
+                name: Uptime
+              - entity: binary_sensor.pcold_docker
+                name: Docker
+              - entity: binary_sensor.pcold_smart
+                name: SMART
+              - entity: binary_sensor.pcold_portainer
+                name: Portainer

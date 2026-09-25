@@ -1,0 +1,9 @@
+light:
+- platform: group
+  name: Tum Isiklar
+  unique_id: metehantech_tum_isiklar
+  entities:
+  - light.odam_lamba
+  - light.oda_2
+  - light.oda_3
+  - light.oda_4
