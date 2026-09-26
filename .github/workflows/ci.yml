@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Syntax and config validity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --upgrade pip && pip install PyYAML
+      - name: Python syntax
+        run: |
+          for f in $(git ls-files '*.py'); do python3 -m py_compile "$f" || exit 1; done
+          echo "$(git ls-files '*.py' | wc -l) module(s) compile"
+      - name: Shell syntax
+        run: |
+          for f in $(git ls-files '*.sh'); do bash -n "$f" || exit 1; done
+          echo "$(git ls-files '*.sh' | wc -l) script(s) parse"
+      # Compose files and Home Assistant packages are the deliverable here, so
+      # a malformed one is a real defect rather than a cosmetic problem.
+      - name: YAML parses
+        run: |
+          python - <<'PY'
+          import subprocess, sys, yaml
+          files = subprocess.run(["git","ls-files","*.yaml","*.yml"],
+                                 capture_output=True, text=True).stdout.split()
+          bad = []
+          for f in files:
+              try:
+                  list(yaml.safe_load_all(open(f, encoding="utf-8")))
+              except Exception as e:
+                  bad.append(f"{f}: {type(e).__name__}")
+          print(f"{len(files)} YAML file(s) checked")
+          if bad:
+              print("\n".join(bad)); sys.exit(1)
+          PY
+
+  privacy-gate:
+    name: Privacy gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan for anything identifying a real installation
+        run: python3 .github/scripts/privacy_gate.py .

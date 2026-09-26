@@ -1,4 +1,6 @@
-# metehantech-homelab
+# MetehanTech Homelab
+
+[![CI](https://github.com/MetehanQF/metehantech-homelab/actions/workflows/ci.yml/badge.svg)](https://github.com/MetehanQF/metehantech-homelab/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 The infrastructure side of a two-node home lab: **redundant DNS**, an **MQTT
 broker**, and **Home Assistant** — with the deployment scripts, cluster tooling
