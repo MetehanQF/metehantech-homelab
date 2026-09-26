@@ -33,14 +33,25 @@ jobs:
         run: |
           python - <<'PY'
           import subprocess, sys, yaml
-          files = subprocess.run(["git","ls-files","*.yaml","*.yml"],
+
+          # Home Assistant configuration uses custom tags (!include and
+          # friends). They are valid HA, so the checker has to understand them
+          # rather than report the file as malformed.
+          class HALoader(yaml.SafeLoader):
+              pass
+
+          HALoader.add_multi_constructor(
+              "!", lambda loader, suffix, node: None)
+
+          files = subprocess.run(["git", "ls-files", "*.yaml", "*.yml"],
                                  capture_output=True, text=True).stdout.split()
           bad = []
           for f in files:
               try:
-                  list(yaml.safe_load_all(open(f, encoding="utf-8")))
+                  with open(f, encoding="utf-8") as fh:
+                      list(yaml.load_all(fh, Loader=HALoader))
               except Exception as e:
-                  bad.append(f"{f}: {type(e).__name__}")
+                  bad.append(f"{f}: {type(e).__name__}: {e}")
           print(f"{len(files)} YAML file(s) checked")
           if bad:
               print("\n".join(bad)); sys.exit(1)
